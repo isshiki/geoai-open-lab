@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "geoai-open-lab"
+version = "0.1.0"
+description = "Open and reproducible urban GeoAI and Location Intelligence experiments."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = ["duckdb>=1.4,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/geoai_open_lab"]
