@@ -52,3 +52,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ## ライセンス
 
 本リポジトリのコードとオリジナルドキュメントは [Apache License 2.0](LICENSE) で提供します。**外部データセットは各提供者の独自ライセンスに従います。Apache 2.0でデータを再許諾するものではありません。**
+
+## Overture Maps Places
+
+第2の実験は [Overture Notebook](notebooks/02_overture_places.ipynb) です。固定release 2026-09-23.0をDuckDBで読み、同じ吉祥寺AOIをLIMITなしで取得します。[実行方法](docs/overture.md) / [検証結果](docs/overture-validation.md)。データ間の比較・網羅性評価は行いません。
