@@ -35,7 +35,7 @@
 
 | 候補 | 現時点 |
 | --- | --- |
-| Foursquare Open Source Places | 最初の実験予定。リリース選定・利用条件確認・取得は未実施 |
+| Foursquare Open Source Places / OS Categories | 2026-09-24に公式取得方法・Apache 2.0・NOTICEを確認。[利用手順](foursquare.md)と[検証記録](foursquare-validation.md)を参照。実データ取得状態は検証記録に記載 |
 | Overture Maps Places | 将来追加。利用条件確認・取得は未実施 |
 | OpenStreetMap | 将来追加。利用条件確認・取得は未実施 |
 | e-Stat / 国勢調査 / 国土数値情報 | 将来追加。各データ単位で利用条件を確認する |

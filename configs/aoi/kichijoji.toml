@@ -1,0 +1,11 @@
+id = "kichijoji-station-bbox-v1"
+name = "吉祥寺駅周辺の実験用矩形"
+crs = "EPSG:4326"
+country = "JP"
+# Author-defined study boundary, not a station coordinate, walking catchment,
+# municipal boundary, or a surveyed radius. Order: longitude / latitude.
+definition = "便宜的な実験用bbox。駅周辺の約1 km四方を想定。徒歩圏・行政界ではない。"
+west = 139.574
+south = 35.699
+east = 139.586
+north = 35.708

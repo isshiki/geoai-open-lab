@@ -2,7 +2,7 @@
 
 **This repository uses only publicly obtainable data. No proprietary company data is included.**
 
-個人ブログと連動する、都市GeoAI / Location Intelligenceの公開実験リポジトリです。公開データを取得・再現できるコードと手順を育てます。初期段階では環境と構造のみを用意し、データ取得はまだ実装していません。
+個人ブログと連動する、都市GeoAI / Location Intelligenceの公開実験リポジトリです。公開データを取得・再現できるコードと手順を育てます。最初の実験は、接続・地域のPOI取得・カフェ抽出を短いコードで追える初心者向けの [Foursquare Open Source PlacesのNotebook](notebooks/01_foursquare_places.ipynb) です。[実行手順](docs/foursquare.md)と[実際の検証状況](docs/foursquare-validation.md)を確認してください。
 
 ## テーマ
 
@@ -21,7 +21,7 @@ New-Item -ItemType Directory -Force data/raw, data/cache | Out-Null
 uv run --locked python -c "import geoai_open_lab, duckdb; print(duckdb.sql('SELECT 42 AS answer').fetchone())"
 ```
 
-`uv.lock` は依存関係の固定に使用します。`.venv/` と `data/` はGit管理外です。新しいcloneでは `data/` がないため上記手順で作成します。現時点ではAPIキーや `.env` は不要です。Jupyterなどは実験で必要になった時点で追加します。
+`uv.lock` は依存関係の固定に使用します。`.venv/` と `data/` はGit管理外です。新しいcloneでは `data/` がないため上記手順で作成します。上記の環境確認には認証は不要です。Foursquare実験では個人用Portal tokenとNotebook依存グループが必要です。詳細は [実行手順](docs/foursquare.md) を参照してください。
 
 ## 構成
 
@@ -37,7 +37,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 ## 最初の実験と拡張
 
-最初は **Foursquare Open Source PlacesをDuckDB / Pythonから取得・確認する** 記事連動実験です。実装前に公式の利用条件・Attribution・再配布条件を確認し、対象releaseと小さなAOIを固定します。現段階ではデータソースの利用条件レビュー・取得とも未実施です。
+最初は **Foursquare Open Source PlacesをDuckDB / Pythonから取得・確認する** 記事連動実験です。個人用Places Portal tokenを使い、PlacesとCategoriesのsnapshotを個別に固定して、吉祥寺の小さなAOIを確認します。利用条件、認証の準備、実行方法、件数の解釈は [Foursquare実験手順](docs/foursquare.md) を参照してください。生データと実行済みNotebookはGit管理外の `data/` にのみ保存します。
 
 拡張は Foursquare → Overture Maps Places → OpenStreetMap → 同一地域の3データ比較 → POIカテゴリ統一 → POI名寄せ / Entity Resolution → 地域特徴量 → 類似地点検索 → Region Embedding → Spatial RAG / GeoAI Agent の順を想定します。将来はe-Stat、国勢調査、国土数値情報なども追加します。
 
