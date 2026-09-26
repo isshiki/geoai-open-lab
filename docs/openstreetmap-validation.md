@@ -8,7 +8,7 @@
 - 取得開始UTC: 2026-09-26T06:59:22.578419+00:00
 - 取得完了UTC: 2026-09-26T06:59:36.074247+00:00
 - OSM base timestamp: 2026-09-26T06:57:36Z
-- endpoint: https://overpass-api.de/api/interpreter。APIキー・token・アカウント不要。
+- endpoint: [https://overpass-api.de/api/interpreter](https://overpass-api.de/api/interpreter)。APIキー・token・アカウント不要。
 - AOI: kichijoji-station-bbox-v1 / EPSG:4326 / west=139.574, south=35.699, east=139.586, north=35.708。既存TOMLを使用。country=JPは設定値で、国フィルターは使用しない。
 - 固定release / attic queryは使用していない。保存済み応答の再処理は可能だが、将来のAPI再取得で同一結果になる保証はない。
 - 今回の最終再処理UTC: 2026-09-26T07:04:44.623776+00:00 — 2026-09-26T07:04:44.908553+00:00。cache_hit=True。
