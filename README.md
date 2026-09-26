@@ -56,3 +56,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ## Overture Maps Places
 
 第2の実験は [Overture Notebook](notebooks/02_overture_places.ipynb) です。固定release 2026-09-23.0をDuckDBで読み、同じ吉祥寺AOIをLIMITなしで取得します。[実行方法](docs/overture.md) / [検証結果](docs/overture-validation.md)。データ間の比較・網羅性評価は行いません。
+
+## OpenStreetMap
+
+第3の実験は [OpenStreetMap Notebook](notebooks/03_openstreetmap_poi.ipynb) です。OSMnx 2.1.1とpublic Overpassで同じ吉祥寺AOIの8キー条件のPOI候補を取得し、`amenity=cafe`を抽出します。APIキーは不要です。[実行方法](docs/openstreetmap.md) / [検証結果](docs/openstreetmap-validation.md)。保存済み応答から再処理でき、他データとの比較・共通カテゴリ化は行いません。
