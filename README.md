@@ -60,3 +60,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ## OpenStreetMap
 
 第3の実験は [OpenStreetMap Notebook](notebooks/03_openstreetmap_poi.ipynb) です。OSMnx 2.1.1とpublic Overpassで同じ吉祥寺AOIの8キー条件のPOI候補を取得し、`amenity=cafe`を抽出します。APIキーは不要です。[実行方法](docs/openstreetmap.md) / [検証結果](docs/openstreetmap-validation.md)。保存済み応答から再処理でき、他データとの比較・共通カテゴリ化は行いません。
+
+## 同じ吉祥寺AOIで3データを比較
+
+第4の実験は [POI比較Notebook](notebooks/04_poi_comparison.ipynb) です。Foursquareは比較用にCOUNTと照合した全件を取得し、Overture・OSMは保存済み結果を再利用します。属性presenceと保守的な一致候補を確認します。網羅率・精度・優劣は評価しません。[実行方法](docs/poi-comparison.md) / [検証結果](docs/poi-comparison-validation.md)。候補表と手動確認サンプルはGit管理外です。

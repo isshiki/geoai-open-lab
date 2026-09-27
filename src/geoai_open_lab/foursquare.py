@@ -312,3 +312,21 @@ def save_results(con):
     """Save validated local extracts and manifest under ignored data/, return path."""
     from ._foursquare_provenance import save_results as save
     return save(con)
+
+
+def fetch_all_places(con, *, bbox, country="JP", timeout_seconds=300):
+    """Fetch an entire pinned AOI for comparison; COUNT is an independent query.
+
+    Leaves the 500-row tutorial API unchanged. A timeout, schema problem, count
+    mismatch, missing geometry, or invalid ID/coordinate fails closed. This uses
+    the same session's pinned catalog and safe query wrapper, never a search API.
+    Call save_all_results to verify the persisted count before comparison.
+    """
+    from ._foursquare_full import fetch_all
+    return fetch_all(con, bbox=bbox, country=country, timeout_seconds=timeout_seconds)
+
+
+def save_all_results(con):
+    """Save full-AOI results and a completed manifest only after disk validation."""
+    from ._foursquare_full import save_all
+    return save_all(con)
