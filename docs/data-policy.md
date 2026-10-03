@@ -38,7 +38,7 @@
 | Foursquare Open Source Places / OS Categories | 2026-09-24に公式取得方法・Apache 2.0・NOTICEを確認。[利用手順](foursquare.md)と[検証記録](foursquare-validation.md)を参照。実データ取得状態は検証記録に記載 |
 | Overture Maps Places | 2026-09-25に公式release・schema・ソース別ライセンスを確認。[利用手順](overture.md)と[検証記録](overture-validation.md)を参照 |
 | OpenStreetMap | 2026-09-26にODbL 1.0・Attribution Guidelines・public Overpass利用条件を確認。[利用手順](openstreetmap.md)と[検証記録](openstreetmap-validation.md)を参照。取得データはGit管理外 |
-| e-Stat / 国勢調査 / 国土数値情報 / Overture Transportation | 実験05の[取得準備](station-access-aging.md)に採用候補と用途別の利用条件・未確認事項を記録（2026-10-03）。人口・N02・N03の3ZIPを取得し[入力監査](station-access-aging-validation.md)済み。生データと派生表はGit管理外。道路は未取得 |
+| e-Stat / 国勢調査 / 国土数値情報 / Overture Transportation | 実験05の[取得準備](station-access-aging.md)に採用候補と用途別の利用条件・未確認事項を記録（2026-10-03）。人口・N02・N03の3ZIPを取得し[入力監査](station-access-aging-validation.md)済み。生データと派生表はGit管理外。道路本体と限定的な参照補完も取得・監査済み。徒歩グラフは未検証 |
 
 ## 追加・コミット前の確認
 
