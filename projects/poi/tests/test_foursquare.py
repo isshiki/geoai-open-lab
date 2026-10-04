@@ -4,6 +4,7 @@ from pathlib import Path
 import os
 import traceback
 import unittest
+import tempfile
 from unittest.mock import Mock, patch
 
 from geoai_open_lab.foursquare import FoursquareError, connect, pinned_table, query
@@ -39,13 +40,29 @@ class FoursquareSafetyTests(unittest.TestCase):
             db.assert_not_called()
 
     def test_env_lookup_stays_in_project_and_disables_interpolation(self):
-        root = Path.cwd()
-        with patch.dict(os.environ, {}, clear=True), patch(
+        with tempfile.TemporaryDirectory() as folder, patch.dict(os.environ, {}, clear=True), patch(
             "geoai_open_lab.foursquare.dotenv_values", return_value={}
         ) as env:
+            root = Path(folder)
             with self.assertRaises(FoursquareError):
                 connect(root)
             env.assert_called_once_with(root / ".env", interpolate=False)
+
+    def test_legacy_monorepo_fallback_and_project_override(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder)
+            root = repo / "projects/poi"
+            root.mkdir(parents=True)
+            (repo / "AGENTS.md").write_text("Public lab")
+            for local in (False, True):
+                if local:
+                    (root / ".env").write_text("# local override")
+                with patch.dict(os.environ, {}, clear=True), patch(
+                    "geoai_open_lab.foursquare.dotenv_values", return_value={}
+                ) as env:
+                    with self.assertRaises(FoursquareError):
+                        connect(root)
+                    env.assert_called_once_with((root if local else repo) / ".env", interpolate=False)
 
     def test_connection_error_redacts_token_and_signed_url(self):
         sentinel = "invented-test-secret-do-not-print"

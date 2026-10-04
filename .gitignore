@@ -1,5 +1,7 @@
 # Local datasets, generated artifacts, and caches (create locally as needed)
 /data/
+/projects/*/data/
+/.tmp/
 /logs/
 /outputs/
 /artifacts/

@@ -1,0 +1,34 @@
+{
+  "public_url": "https://github.com/isshiki/rail-gap-map",
+  "commit": "4176263d09ae9549f8feb16852adfc4378cac29c",
+  "files": {
+    "config": {
+      "source_sha256": "888f4147f2fc5790e34038547b1f68d44a62b71e9742e0d295a281214b559300"
+    },
+    "geo": {
+      "source_sha256": "f76b71537445db4c208f505983809132cd8ed2801f63a4b8e5060d1fb302cf23"
+    },
+    "osmtags": {
+      "source_sha256": "f861794f7aa51489a10ee8e615ac19a0a9d2b2ad519932e90acf214dac851f5a"
+    },
+    "network": {
+      "source_sha256": "a09e43cd5c6626cefa5099368450188601160c12cef6b64b69936c65bb6e5ce1"
+    },
+    "water": {
+      "source_sha256": "7583a8975aa85cf840ea8ecc7a6b4714e9aeea45f2d41d28e5baa1ad0c33da2f"
+    },
+    "admin": {
+      "source_sha256": "6ee99697f481a196b10c5ca8f7fef21d5f3a67b5d12a496bc4d78249d6715a46"
+    },
+    "stations": {
+      "source_sha256": "495b1a2261047b488d28e3c4b8c68cfeeef1cd1d89b166f9f4661b39dffac737"
+    },
+    "shortest": {
+      "source_sha256": "ebbefd00a944422fe59474321bed49556edd52b124caa672af4be987eb9b3ba8"
+    },
+    "surface": {
+      "source_sha256": "84d0fd8b6872b8c93685797fe0e74d9011d9277f30366b695b6bf256c1eed3a2"
+    }
+  },
+  "changes": "network/water use local spatial extension; no INSTALL"
+}

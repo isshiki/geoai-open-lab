@@ -20,6 +20,8 @@ This is an independent, public personal GeoAI / Location Intelligence lab linked
 
 ## Development
 
+Group notebooks, docs, source, tests, configs and Python environments by purpose under `projects/`. `projects/poi/` and `projects/station-territory/` are independent themes; notebook numbers are local execution order, not blog article numbers. Root policies apply to both. Store each theme's generated artifacts in its ignored `data/` directory. Consult `docs/project-organization.md` and the theme's article handoff before moving public links. Figure signatures use `masahiko.info` unobtrusively in the upper-right title row, separately from required data attribution.
+
 Keep the structure small. Use Python 3.11+ and `uv sync --locked`; commit `uv.lock` when dependencies change. Add dependencies only when needed. Start with Foursquare Open Source Places inspection via DuckDB / Python; do not prebuild the later pipeline.
 
 Read `docs/data-policy.md` before adding a data source or publishing results. Do not add automations, cloud resources, or downloaded datasets merely to scaffold the project.

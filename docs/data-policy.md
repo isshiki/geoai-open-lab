@@ -35,10 +35,10 @@
 
 | 候補 | 現時点 |
 | --- | --- |
-| Foursquare Open Source Places / OS Categories | 2026-09-24に公式取得方法・Apache 2.0・NOTICEを確認。[利用手順](foursquare.md)と[検証記録](foursquare-validation.md)を参照。実データ取得状態は検証記録に記載 |
-| Overture Maps Places | 2026-09-25に公式release・schema・ソース別ライセンスを確認。[利用手順](overture.md)と[検証記録](overture-validation.md)を参照 |
-| OpenStreetMap | 2026-09-26にODbL 1.0・Attribution Guidelines・public Overpass利用条件を確認。[利用手順](openstreetmap.md)と[検証記録](openstreetmap-validation.md)を参照。取得データはGit管理外 |
-| e-Stat / 国勢調査 / 国土数値情報 | 将来追加。各データ単位で利用条件を確認する |
+| Foursquare Open Source Places / OS Categories | 2026-09-24に公式取得方法・Apache 2.0・NOTICEを確認。[利用手順](../projects/poi/docs/foursquare.md)と[検証記録](../projects/poi/docs/foursquare-validation.md)を参照。実データ取得状態は検証記録に記載 |
+| Overture Maps Places | 2026-09-25に公式release・schema・ソース別ライセンスを確認。[利用手順](../projects/poi/docs/overture.md)と[検証記録](../projects/poi/docs/overture-validation.md)を参照 |
+| OpenStreetMap | 2026-09-26にODbL 1.0・Attribution Guidelines・public Overpass利用条件を確認。[利用手順](../projects/poi/docs/openstreetmap.md)と[検証記録](../projects/poi/docs/openstreetmap-validation.md)を参照。取得データはGit管理外 |
+| e-Stat / 国勢調査 / 国土数値情報 | 駅の縄張りテーマで固定入力を再利用。[出典と公開条件](../projects/station-territory/docs/data-sources.md)を参照。図表・派生表の公開条件は別途確認 |
 
 ## 追加・コミット前の確認
 

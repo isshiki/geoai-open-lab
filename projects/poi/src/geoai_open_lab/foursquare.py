@@ -28,9 +28,17 @@ class FoursquareError(RuntimeError):
 
 
 def connect(root: Path) -> duckdb.DuckDBPyConnection:
-    """Use only the project .env or FSQ_OS_PLACES_TOKEN; never search parent folders."""
+    """Use the project token, with an explicit legacy monorepo .env fallback.
+
+    No arbitrary parent search: only projects/poi under the lab's AGENTS.md root
+    may read the pre-migration root .env, and only when no project .env exists.
+    """
+    token_file = root / ".env"
+    if (not token_file.exists() and root.name == "poi" and root.parent.name == "projects"
+            and (root.parent.parent / "AGENTS.md").is_file()):
+        token_file = root.parent.parent / ".env"
     token = os.environ.get("FSQ_OS_PLACES_TOKEN") or dotenv_values(
-        root / ".env", interpolate=False
+        token_file, interpolate=False
     ).get("FSQ_OS_PLACES_TOKEN")
     if not token or not token.strip():
         raise FoursquareError(

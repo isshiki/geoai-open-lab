@@ -1,0 +1,11 @@
+{
+  "frozen_before_extraction": "2026-10-04",
+  "priority": ["healthcare", "food", "education", "shop", "tourism", "leisure", "office", "other_amenity"],
+  "excluded_amenity": ["bench", "waste_basket", "waste_disposal", "recycling", "bicycle_parking", "bicycle_repair_station", "parking", "parking_entrance", "parking_space", "motorcycle_parking", "taxi", "bus_station", "shelter", "drinking_water", "water_point", "toilets", "vending_machine", "charging_station", "grit_bin", "post_box", "telephone", "fountain", "clock", "letter_box", "loading_dock"],
+  "food": ["restaurant", "cafe", "fast_food", "bar", "pub", "food_court", "ice_cream", "biergarten"],
+  "education": ["school", "kindergarten", "college", "university", "library", "language_school", "music_school", "driving_school"],
+  "medical_amenity": ["hospital", "clinic", "doctors", "dentist", "pharmacy", "nursing_home", "veterinary"],
+  "excluded_leisure": ["picnic_table", "outdoor_seating", "slipway"],
+  "disabled_values": ["no", "disused", "abandoned", "demolished", "construction", "proposed"],
+  "facility_dedup": "none; unique (OSM element type,id), not real-world establishment count"
+}
