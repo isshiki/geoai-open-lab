@@ -64,9 +64,3 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ## 同じ吉祥寺AOIで3データを比較
 
 第4の実験は [POI比較Notebook](notebooks/04_poi_comparison.ipynb) です。Foursquareは比較用にCOUNTと照合した全件を取得し、Overture・OSMは保存済み結果を再利用します。属性presenceと保守的な一致候補を確認します。網羅率・精度・優劣は評価しません。[実行方法](docs/poi-comparison.md) / [検証結果](docs/poi-comparison-validation.md)。候補表と手動確認サンプルはGit管理外です。
-
-## 駅アクセスと高齢化率（実験05・準備中）
-
-現在は保存済み道路の[歩行規則の監査・グラフ構築設計](docs/station-access-aging-walking.md)まで進んでいます。方向・条件・複数道路にまたがる遷移制限を確認済みで、徒歩ネットワークの構築と駅距離の計算は次段階です。
-
-武蔵野市・三鷹市を候補に、公開人口統計と駅・道路データから関連を独立に検証します。[計画書](docs/station-access-aging-plan.md) / [採用データ候補・利用条件・取得準備](docs/station-access-aging.md)。人口・駅・市域の3ZIPを取得して[入力監査](docs/station-access-aging-validation.md)まで実施しました。道路の公開ファイル一覧を確認し、末尾メタデータは全160ファイルの検査が完了し、必要列の本体取得計画を作成しました。道路本体の取得と接続参照監査まで実施しました。元の道路集合の不足参照は限定的な補完で解消しました。補助segmentの追加参照と歩行・境界規則の確認は残っています。徒歩経路・高齢化との関連の分析は未実施です。公開用Notebookはまだありません。
