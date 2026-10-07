@@ -74,7 +74,11 @@ Apache-2.0のコードと第三者データのライセンスは区別する。�
 - 駅テーマは別パッケージへ移行し、東京の道路再生成と格子以降の集計を検証済み。元のeki-walk/rail-gap-mapは編集しない。
 - ブログ側の反映を確認していない段階で「新URLへ移行完了」「記事掲載準備完了」としない。
 
-## 図版の署名
+## 将来テーマの登録（2026-10-07）
+
+[retail-spatial-models](../projects/retail-spatial-models/README.md)を、POI・駅の縄張りとは独立した研究候補として追加した。現在の構成はREADMEとdocsの計画・出典確認のみ。上の構成図は実装済み2テーマの移行時点を示す。新テーマの環境・コード・Notebookは実装着手時に追加し、計画登録だけでデータ取得や分析を始めない。詳細は[研究計画](../projects/retail-spatial-models/docs/research-plan.md)を参照。
+
+## 図版の署名と出典
 
 ユーザー指定の署名は [masahiko.info](https://masahiko.info/)。図版のタイトルと同じ高さの右上へ `masahiko.info` を13ptのグレーで配置する。内容や凡例に重ねず、データ提供者のAttributionは別に読める大きさで記載する。SVG/HTML等でリンクを付けられる場合は https://masahiko.info/ を使用する。署名は出典・ライセンス表示の代わりにはしない。
 
