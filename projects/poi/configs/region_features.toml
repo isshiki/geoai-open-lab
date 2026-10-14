@@ -1,4 +1,6 @@
 experiment = "kichijoji-region-features-v1"
+region_id = "kichijoji-station-bbox-v1"
+region_label = "吉祥寺駅周辺の実験用矩形"
 input = "data/raw/overture/20260925T115558Z-2f21beb2/places.parquet"
 input_manifest = "data/raw/overture/20260925T115558Z-2f21beb2/manifest.json"
 input_run = "20260925T115558Z-2f21beb2"

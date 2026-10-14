@@ -102,4 +102,40 @@ def save_figures(runs,out):
     p=out/'category_composition_250.svg'
     p.write_text(document(1240,end+190,'場所ごとのカテゴリ構成：250m格子',b,
         '構成比だけで規模を比べない：左側に各区画の登録件数、右側にAOI内面積を表示。'),encoding='utf8')
-    return [path,p]
+    return [path,p,save_profile_figure(out)]
+
+
+def save_profile_figure(out):
+    """Render the computed single-row CSV, with raw units and no normalization."""
+    import csv
+    out = Path(out)
+    with (out/'region_features.csv').open(encoding='utf8', newline='') as f:
+        rows = list(csv.DictReader(f))
+    if len(rows) != 1:
+        raise ValueError('Expected one region for this figure.')
+    r = rows[0]
+    metrics = [
+        ('対象面積', f'{float(r["area_km2"]):.6f} km²'),
+        ('POI登録数', f'{int(r["poi_count"]):,} 件'),
+        ('地域全体の平均登録密度', f'{float(r["poi_density_per_km2"]):,.2f} 件/km²'),
+        ('250m格子の最大密度', f'{float(r["peak_density_250m"]):,.2f} 件/km²'),
+        ('集中度（最大密度 ÷ 地域平均）', f'{float(r["peak_to_mean_density_250m"]):.4f} 倍'),
+    ]
+    body = text(32,116,'1地域＝1行。ここでは、その列を読みやすく縦に並べています。',19)
+    for i,(label,value) in enumerate(metrics):
+        y=160+i*42
+        body += text(40,y,label,20)+text(1140,y,value,23,text_anchor='end')
+    body += text(40,390,'カテゴリ構成比（分母＝全登録件数、欠損を含む）',21)
+    fields=['restaurant_share','cafe_share','bar_share','fashion_share','beauty_share',
+            'food_store_share','other_share','category_missing_share']
+    for i,(group,field) in enumerate(zip(COLORS,fields)):
+        y=430+i*42;share=float(r[field])
+        body += text(40,y+20,LABELS[group],19)
+        body += f'<rect x="285" y="{y}" width="{share*700:.3f}" height="25" fill="{COLORS[group]}"/>'
+        body += text(1140,y+20,f'{share*100:.2f}%',21,text_anchor='end')
+    body += text(40,805,'横棒は0〜100%の共通尺度。表示群の定義は設定ファイルが正本。',17)
+    body += text(40,838,'比較の候補：密度・構成比・集中度。類似度に使う列や重みはまだ決めていません。',17)
+    body += text(40,871,'面積・件数・欠損率は監査にも使用。今回の1地域だけでは街同士の比較はできません。',17)
+    p=out/'region_profile.svg'
+    p.write_text(document(1240,970,'街の数値プロフィール',body,r['region_label']),encoding='utf8')
+    return p

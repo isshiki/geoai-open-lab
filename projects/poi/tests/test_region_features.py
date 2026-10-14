@@ -90,3 +90,52 @@ class RegionFeaturesTests(unittest.TestCase):
     def test_input_hash_failure_stops_before_read(self):
         with patch('geoai_open_lab.region_features.digest',return_value='bad'):
             with self.assertRaisesRegex(ValueError,'hash mismatch'):load_inputs()
+
+
+class RegionProfileTests(unittest.TestCase):
+    def runs(self, empty=False):
+        from geoai_open_lab.region_features import region_profile
+        runs={}
+        for size in (250,500):
+            g=make_grid(box(0,0,300,250),size)
+            points=[] if empty else [(10,10),(275,10)]
+            a=assign_cells(fixture(points, None if empty else ['cafe',None]),g,size)
+            c,t,_=summarize_grid(a,g,{'cafe':['cafe']})
+            runs[size]=(c,t)
+        return runs
+
+    def test_fixed_schema_one_row_and_pooled_metrics(self):
+        from geoai_open_lab.region_features import region_profile, REGION_COLUMNS, SHARE_COLUMNS
+        runs=self.runs()
+        p=region_profile(runs,'invented','合成地域')
+        self.assertEqual(p.shape,(1,len(REGION_COLUMNS)))
+        self.assertEqual(tuple(p.columns),REGION_COLUMNS)
+        pd.testing.assert_frame_equal(p,region_profile(runs,'invented','合成地域'))
+        r=p.iloc[0]
+        self.assertAlmostEqual(r.area_km2,.075)
+        self.assertEqual(r.poi_count,2)
+        self.assertAlmostEqual(r.poi_density_per_km2,2/.075)
+        self.assertEqual(r.cafe_share,.5)
+        self.assertEqual(r.category_missing_share,.5)
+        self.assertEqual(r.other_share,0)
+        self.assertAlmostEqual(sum(r[c] for c in SHARE_COLUMNS),1)
+        self.assertEqual(r.peak_density_250m,80)
+        self.assertAlmostEqual(r.peak_to_mean_density_250m,3)
+
+    def test_zero_region_shares_undefined(self):
+        from geoai_open_lab.region_features import region_profile, SHARE_COLUMNS
+        r=region_profile(self.runs(True),'empty','空の合成地域').iloc[0]
+        self.assertEqual(r.poi_count,0)
+        self.assertEqual(r.poi_density_per_km2,0)
+        self.assertTrue(all(pd.isna(r[c]) for c in SHARE_COLUMNS))
+        self.assertTrue(pd.isna(r.peak_to_mean_density_250m))
+
+    def test_mismatched_resolution_rejected(self):
+        from geoai_open_lab.region_features import region_profile
+        runs=self.runs();runs[500][0].loc[0,'poi_count']+=1
+        with self.assertRaises(ValueError):region_profile(runs,'test','合成地域')
+
+    def test_unknown_group_rejected(self):
+        from geoai_open_lab.region_features import region_profile
+        runs=self.runs();runs[250][1]['display_group'].loc[0,'display_group']='unexpected'
+        with self.assertRaises(ValueError):region_profile(runs,'test','合成地域')

@@ -2,7 +2,7 @@
 
 [Notebook](../notebooks/05_region_features.ipynb) / [検証](region-features-validation.md) / [記事引き継ぎ](region-features-article-handoff.md)
 
-保存済みOverture Placesの登録件数・密度・カテゴリ構成を、吉祥寺の実験用矩形の内部で比較する。街同士の比較、普遍的分類、営業中店舗数や人流の推定は行わない。
+主成果は **1地域＝1行、特徴量＝列** の `region_features.csv`。保存済みOverture Placesから、吉祥寺駅周辺の実験用矩形の数値プロフィールを作る。250m・500m格子は密度・集中度の算出根拠となる途中データとして残す。[各列の日本語名・単位・定義・比較時の注意](region-feature-columns.md)を参照。街同士の比較、普遍的分類、営業中店舗数や人流の推定は行わない。
 
 ## 固定入力
 
@@ -47,12 +47,16 @@ uv sync --locked --group notebooks --group osm
 
 既存環境では `uv sync --locked --offline --group notebooks --group osm --no-install-project --inexact --cache-dir data/cache/uv` を確認した。これはインストール済みの本プロジェクトを再構築しないためのコマンドで、新規環境向けではない。既存osmグループが持つpyproj・shapely・pyarrowを再利用しており、OSMデータは使用しない。Matplotlibやフォント・背景地図の追加取得はせず、標準ライブラリでSVGを作る。
 
-`load_inputs()` は固定入力の検査と投影、`run_experiment()` は集計・照合・manifest保存、`save_figures()` は共通色尺度の地図と構成比図を担当する。Notebookはこの3関数を使う。
+`load_inputs()` は固定入力の検査と投影、`run_experiment()` は格子集計・地域1行の表生成・照合・manifest保存、`save_figures()` はプロフィール図と、算出根拠の地図・構成比図を担当する。Notebookはこの3関数を使う。
 
-出力先は `data/cache/region_features/kichijoji-v1/`。再実行で同じ名前を上書きする。`cells_*.csv`、`category_*.csv`、`display_group_*.csv`、`status_*.csv`、`assigned_*.parquet`、`manifest.json`、SVGを保存する。manifestに実行日時UTC、環境、入力・コード・設定・表のハッシュを残す。実行済みNotebookとHTMLも同フォルダに置き、Gitへ追加しない。
+出力先は `data/cache/region_features/kichijoji-v1/`。再実行で同じ名前を上書きする。主成果 `region_features.csv` と `region_profile.svg` に加え、`cells_*.csv`、`category_*.csv`、`display_group_*.csv`、`status_*.csv`、`assigned_*.parquet`、`manifest.json`、SVGを保存する。manifestに実行日時UTC、環境、入力・コード・設定・表のハッシュを残す。実行済みNotebookとHTMLも同フォルダに置き、Gitへ追加しない。
 
 ## 出典・公開条件（2026-10-14確認）
 
 既存Overtureデータの条件は[利用ガイド](overture.md)を引き継ぐ。[公式Attribution](https://docs.overturemaps.org/attribution/)・[Places](https://docs.overturemaps.org/guides/places/)・[FAQ](https://overturemaps.org/about/faq/)を再確認した。PlacesにはCDLA-Permissive-2.0、Apache-2.0、CC0のソースがあり、コードのApache-2.0で外部データを再ライセンスしない。FAQが示す分析結果とデータ再配布の区別に基づき、今回公開するのは方法・集計値の説明。生データ・POI別表は公開しない。図にはOverture Maps Foundation、release・取得日を表示する。記事にも公式Attributionへのリンクを付ける。レコードを再配布する場合はソースごとのNOTICE等を別途確認する。
 
 座標系の選択根拠：[国土地理院・平面直角座標系](https://www.gsi.go.jp/sokuchikijun/jpc.html)。本実験は位置精度・カテゴリ精度・網羅性を保証せず、重複IDがないことは実店舗の重複がないことを意味しない。
+
+## 地域1行の集約
+
+`region_profile(runs, region_id, region_label)` は地域別に固定15列を返す。地域平均密度は合計件数÷合計面積、カテゴリ構成比は各群の合計件数÷全件数。格子ごとの比率を単純平均しない。集中度は250m最大密度÷地域平均。登録数・密度の重複評価や構成比の総和制約があるため、類似度への採用列は次段階で決める。release・取得日・AOI・格子条件はmanifest、欠損率は表とmanifestで監査する。

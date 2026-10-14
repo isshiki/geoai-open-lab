@@ -21,6 +21,43 @@ from .aoi import load_aoi, project_root
 
 MISSING = "__MISSING__"
 OTHER = "__OTHER__"
+SHARE_GROUPS = ('restaurant', 'cafe', 'bar', 'fashion', 'beauty', 'food_store', OTHER, MISSING)
+SHARE_COLUMNS = ('restaurant_share', 'cafe_share', 'bar_share', 'fashion_share',
+                 'beauty_share', 'food_store_share', 'other_share', 'category_missing_share')
+REGION_COLUMNS = ('region_id', 'region_label', 'area_km2', 'poi_count',
+                  'poi_density_per_km2', *SHARE_COLUMNS, 'peak_density_250m',
+                  'peak_to_mean_density_250m')
+
+
+def region_profile(runs, region_id, region_label):
+    """One region per row, fixed columns; pooled counts, not mean cell shares.
+
+    Mean density is total count / clipped area, not the unweighted cell mean.
+    Zero-population POI inputs have undefined shares and peak/mean ratio.
+    Release, acquisition and grid conditions belong in the companion manifest.
+    """
+    cells, tables = runs[250]
+    area = float(cells.area_m2.sum()) / 1e6
+    count = int(cells.poi_count.sum())
+    if area <= 0 or not np.isfinite(area):
+        raise ValueError('Invalid region area.')
+    coarse = runs[500][0]
+    if int(coarse.poi_count.sum()) != count or not np.isclose(coarse.area_m2.sum()/1e6, area, rtol=0, atol=1e-10):
+        raise ValueError('Resolution totals differ.')
+    counts = tables['display_group'].groupby('display_group')['count'].sum()
+    if set(counts.index) - set(SHARE_GROUPS) or int(counts.sum()) != count:
+        raise ValueError('Region category totals/schema differ.')
+    density = count / area
+    peak = float(cells.density_per_km2.max())
+    row = dict(region_id=region_id, region_label=region_label, area_km2=area,
+               poi_count=count, poi_density_per_km2=density)
+    row.update({col: float(counts.get(group, 0))/count if count else np.nan
+                for group, col in zip(SHARE_GROUPS, SHARE_COLUMNS)})
+    row.update(peak_density_250m=peak,
+               peak_to_mean_density_250m=peak/density if density else np.nan)
+    if count and not np.isclose(sum(row[c] for c in SHARE_COLUMNS), 1, rtol=0, atol=1e-12):
+        raise ValueError('Region shares do not sum to one.')
+    return pd.DataFrame([row], columns=REGION_COLUMNS)
 
 
 def digest(path):
@@ -192,6 +229,8 @@ def run_experiment(root=None):
     actual=coarse.set_index(['ix','iy'])[['poi_count','area_m2']]
     if not np.allclose(rolled.sort_index(),actual.sort_index(),atol=1e-5):
         raise ValueError('250/500 m nesting reconciliation failed.')
+    profile = region_profile(runs, cfg['region_id'], cfg['region_label'])
+    profile.to_csv(out/'region_features.csv', index=False)
     transform=Transformer.from_crs('EPSG:4326',cfg['crs'],always_xy=True)
     area_delta=abs(projected_aoi(provenance['aoi'],transform,1000).area-polygon.area)
     summary={str(size):dict(cells=len(c),zero_cells=int((c.poi_count==0).sum()),
@@ -200,7 +239,12 @@ def run_experiment(root=None):
         highest_density_cell=c.loc[c.density_per_km2.idxmax(),'cell_id']) for size,(c,t) in runs.items()}
     manifest=dict(experiment=cfg['experiment'],completed_utc=datetime.now(timezone.utc).isoformat(),
         config=cfg,**provenance,area_m2=polygon.area,edge_densification_delta_m2=area_delta,
-        summary=summary,category_counts=places.basic_category.fillna(MISSING).value_counts().to_dict(),
+        summary=summary,region_profile=profile.to_dict(orient='records'),
+        region_schema_version='1', region_columns=list(REGION_COLUMNS),
+        comparison_candidates=['poi_density_per_km2', *SHARE_COLUMNS[:-1],
+                               'peak_to_mean_density_250m'],
+        comparison_note='Candidates only; missing share is an audit measure. No similarity or normalization selected.',
+        category_counts=places.basic_category.fillna(MISSING).value_counts().to_dict(),
         status_counts=places.operating_status.fillna(MISSING).value_counts().to_dict(),
         python=platform.python_version(),packages={p:importlib.metadata.version(p) for p in
         ['duckdb','pandas','numpy','pyproj','shapely','pyarrow']},
