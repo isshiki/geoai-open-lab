@@ -17,7 +17,8 @@ import numpy as np
 import pandas as pd
 from pyproj import Transformer, network
 from shapely.geometry import Polygon, Point, box
-from .aoi import load_aoi, project_root
+from .aoi import project_root
+from .station_square import square_geometry
 
 MISSING = "__MISSING__"
 OTHER = "__OTHER__"
@@ -72,8 +73,16 @@ def load_inputs(root=None):
     if digest(path) != cfg['input_sha256'] or digest(mp) != cfg['manifest_sha256']:
         raise ValueError('Pinned input or manifest hash mismatch.')
     manifest = json.loads(mp.read_text(encoding='utf8'))
-    aoi = load_aoi(cfg['aoi'], root=root)
-    if (manifest['release'] != cfg['release'] or manifest['aoi'] != aoi
+    aoi = tomllib.loads((root/cfg['aoi']).read_text(encoding='utf8'))
+    center = dict(x=aoi['center_x'], y=aoi['center_y'])
+    polygon = square_geometry(center)
+    if aoi['crs'] != 'EPSG:6677' or aoi['side_m'] != 1000:
+        raise ValueError('Expected 1km metric square.')
+    if list(cfg['origin']) != list(polygon.bounds[:2]):
+        raise ValueError('Grid origin must be the square southwest corner.')
+    if (manifest['release'] != cfg['release'] or manifest['projected_bounds'] != list(polygon.bounds)
+            or not manifest['coverage_complete']
+            or manifest['station']['x'] != center['x'] or manifest['station']['y'] != center['y']
             or manifest['limit'] is not None or manifest['country_filter'] is not None
             or manifest['row_count'] != cfg['expected_rows']
             or manifest['output_sha256']['places.parquet'] != cfg['input_sha256']):
@@ -90,20 +99,17 @@ def load_inputs(root=None):
             FROM read_parquet(?) ORDER BY id''', [str(path)]).df()
     if len(frame) != cfg['expected_rows'] or frame.id.isna().any() or frame.id.duplicated().any():
         raise ValueError('Incomplete input or invalid POI IDs.')
-    inside = (frame.longitude.between(aoi['west'], aoi['east'])
-              & frame.latitude.between(aoi['south'], aoi['north']))
-    if not inside.all():
-        raise ValueError('Input contains a point outside the inclusive AOI.')
     network.set_network_enabled(False)
     transform = Transformer.from_crs('EPSG:4326', cfg['crs'], always_xy=True)
     frame['x'], frame['y'] = transform.transform(frame.longitude.to_numpy(), frame.latitude.to_numpy())
     if not np.isfinite(frame[['x', 'y']]).all().all():
         raise ValueError('Non-finite projected coordinate.')
-    # Densify all four geographic edges to avoid treating curved projected edges
-    # as a bounding rectangle. 100 segments/edge; area sensitivity is audited.
-    polygon = projected_aoi(aoi, transform, 100)
+    inside = frame.x.between(polygon.bounds[0],polygon.bounds[2]) & frame.y.between(polygon.bounds[1],polygon.bounds[3])
+    if not inside.all():raise ValueError('Input point outside station square.')
     return frame, polygon, cfg, {'input_schema': schema, 'acquisition_utc': manifest['completed_at_utc'],
-                                'aoi': aoi, 'transform_description': transform.description}
+        'aoi': aoi, 'station': manifest['station'], 'licenses': manifest['licenses'],
+        'acquisition_bbox': manifest['acquisition_bbox'], 'transform_description': transform.description}
+
 
 
 def projected_aoi(aoi, transformer, segments=100):
@@ -213,6 +219,8 @@ def run_experiment(root=None):
     runs={}
     for size in cfg['grid_sizes']:
         grid=make_grid(polygon,size,cfg['origin'])
+        if len(grid)!=(1000//size)**2 or not np.allclose(grid.area_m2,size*size,rtol=0,atol=1e-6):
+            raise ValueError('Station grid must contain complete cells only.')
         assigned=assign_cells(places,grid,size,cfg['origin'])
         cells,tables,assigned=summarize_grid(assigned,grid,cfg['display_groups'])
         assert cells.poi_count.sum()==len(places)
@@ -231,14 +239,12 @@ def run_experiment(root=None):
         raise ValueError('250/500 m nesting reconciliation failed.')
     profile = region_profile(runs, cfg['region_id'], cfg['region_label'])
     profile.to_csv(out/'region_features.csv', index=False)
-    transform=Transformer.from_crs('EPSG:4326',cfg['crs'],always_xy=True)
-    area_delta=abs(projected_aoi(provenance['aoi'],transform,1000).area-polygon.area)
     summary={str(size):dict(cells=len(c),zero_cells=int((c.poi_count==0).sum()),
         partial_cells=int(c.partial_cell.sum()),total=int(c.poi_count.sum()),
         max_count=int(c.poi_count.max()),max_density=float(c.density_per_km2.max()),
         highest_density_cell=c.loc[c.density_per_km2.idxmax(),'cell_id']) for size,(c,t) in runs.items()}
     manifest=dict(experiment=cfg['experiment'],completed_utc=datetime.now(timezone.utc).isoformat(),
-        config=cfg,**provenance,area_m2=polygon.area,edge_densification_delta_m2=area_delta,
+        config=cfg,**provenance,area_m2=polygon.area,grid_definition="station centered 1000m square; local southwest origin",
         summary=summary,region_profile=profile.to_dict(orient='records'),
         region_schema_version='1', region_columns=list(REGION_COLUMNS),
         comparison_candidates=['poi_density_per_km2', *SHARE_COLUMNS[:-1],
@@ -249,7 +255,7 @@ def run_experiment(root=None):
         python=platform.python_version(),packages={p:importlib.metadata.version(p) for p in
         ['duckdb','pandas','numpy','pyproj','shapely','pyarrow']},
         source_sha256={p:digest(root/p) for p in ['src/geoai_open_lab/region_features.py',
-            'src/geoai_open_lab/region_figures.py','notebooks/05_region_features.ipynb',
+            'src/geoai_open_lab/region_figures.py','src/geoai_open_lab/station_square.py','notebooks/05_region_features.ipynb',
             'configs/region_features.toml',cfg['aoi'],'pyproject.toml','uv.lock']},
         output_sha256={p.name:digest(p) for p in sorted(out.iterdir()) if p.suffix in {'.csv','.parquet'}},
         command='Run notebooks/05_region_features.ipynb top-to-bottom from projects/poi',

@@ -1,0 +1,13 @@
+id = "kichijoji-station-1km-v1"
+label = "吉祥寺駅周辺1km四方"
+crs = "EPSG:6677"
+side_m = 1000
+center_x = -22941.702420628444
+center_y = -32905.06120966877
+longitude = 139.57980985190306
+latitude = 35.70314448120142
+station_group = "003584"
+station_source = "国土数値情報 N02-25（CC BY 4.0）を加工"
+source_url = "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html"
+source_sha256 = "aaf76af133b2e771e538fabc4646d2e443dc1d5a67b221382a28d744e706cc9f"
+modified_date = "2026-10-14"

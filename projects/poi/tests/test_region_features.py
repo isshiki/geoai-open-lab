@@ -139,3 +139,33 @@ class RegionProfileTests(unittest.TestCase):
         from geoai_open_lab.region_features import region_profile
         runs=self.runs();runs[250][1]['display_group'].loc[0,'display_group']='unexpected'
         with self.assertRaises(ValueError):region_profile(runs,'test','合成地域')
+
+
+class StationSquareTests(unittest.TestCase):
+    def test_center_area_full_cells_and_unique_assignment(self):
+        from geoai_open_lab.station_square import square_geometry, acquisition_bbox
+        center={'x':-22941.702420628444,'y':-32905.06120966877}
+        polygon=square_geometry(center)
+        self.assertEqual(polygon.area,1000000)
+        self.assertAlmostEqual(polygon.centroid.x,center['x'])
+        self.assertAlmostEqual(polygon.centroid.y,center['y'])
+        west,south,east,north=polygon.bounds
+        points=fixture([(west,south),(east,north),(center['x'],center['y'])])
+        for size,n in [(250,16),(500,4)]:
+            grid=make_grid(polygon,size,(west,south))
+            self.assertEqual(len(grid),n)
+            self.assertTrue((grid.area_m2==size*size).all())
+            assigned=assign_cells(points,grid,size,(west,south))
+            self.assertEqual(len(assigned),3)
+            self.assertFalse(assigned.id.duplicated().any())
+            cells,_,_=summarize_grid(assigned,grid,{})
+            self.assertEqual(cells.poi_count.sum(),3)
+            self.assertEqual(cells.partial_cell.sum(),0)
+        bbox=acquisition_bbox(center)
+        self.assertLess(bbox['west'],bbox['east'])
+        self.assertLess(bbox['south'],bbox['north'])
+
+    def test_station_zip_wrong_hash_rejected(self):
+        from geoai_open_lab.station_square import station_center
+        with patch('geoai_open_lab.station_square.Path.read_bytes',return_value=b'invented'):
+            with self.assertRaisesRegex(ValueError,'hash mismatch'):station_center('synthetic.zip')
