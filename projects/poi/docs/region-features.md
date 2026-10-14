@@ -1,62 +1,46 @@
-# 吉祥寺のPOI地域特徴量
+# 吉祥寺駅周辺1km四方の地域特徴量
 
-[Notebook](../notebooks/05_region_features.ipynb) / [検証](region-features-validation.md) / [記事引き継ぎ](region-features-article-handoff.md)
+[Notebook](../notebooks/05_region_features.ipynb) / [列定義](region-feature-columns.md) / [検証](region-features-validation.md) / [記事引き継ぎ](region-features-article-handoff.md)
 
-主成果は **1地域＝1行、特徴量＝列** の `region_features.csv`。保存済みOverture Placesから、吉祥寺駅周辺の実験用矩形の数値プロフィールを作る。250m・500m格子は密度・集中度の算出根拠となる途中データとして残す。[各列の日本語名・単位・定義・比較時の注意](region-feature-columns.md)を参照。街同士の比較、普遍的分類、営業中店舗数や人流の推定は行わない。
+主成果は **1地域＝1行、固定15列** の数値プロフィール。今回は吉祥寺駅周辺1km四方の1行を作る。格子図は算出根拠であり、記事の主役は地域の密度・カテゴリ構成比・集中度である。街同士の比較や類似度は未実施。
 
-## 固定入力
+## 入力と範囲
 
-[設定](../configs/region_features.toml)が入力と条件の正本。自動的に最新ファイルを選ばない。
+[設定](../configs/region_features.toml)と[駅中心AOI](../configs/aoi/kichijoji_station_1km.toml)が正本。
 
-- release: `2026-09-23.0`、schema: `v2.0.0`
-- 取得実行: `20260925T115558Z-2f21beb2`、完了: `2026-09-25T11:55:58.750623+00:00`
-- 入力: `data/raw/overture/20260925T115558Z-2f21beb2/places.parquet`、688,915 bytes、3,666行
-- SHA-256: `341993b170f5903c1725551a01850ca14094b9b2e76087b86be8e8aef60b9011`
-- 取得manifest SHA-256: `7883ae09a26eb546e52849d7d9dc5107132cd08d22de0b1e1b8eb931a1e1bff5`
-- AOI: [kichijoji.toml](../configs/aoi/kichijoji.toml)、西139.574・南35.699・東139.586・北35.708、EPSG:4326、外周を含む
-- LIMIT・country・営業状態・confidenceによる除外なし。保存されたAOI取得結果の全件であり、実世界の全店舗という意味ではない。
+- release `2026-09-23.0` / schema `v2.0.0`。自動でlatestへ切り替えない。
+- 取得実行 `20261014T141719Z-station-square`、取得完了UTC `2026-10-14T14:17:39.291936+00:00`。
+- 入力 `data/raw/region_features/20261014T141719Z-station-square/places.parquet`、3,591行、362,178 bytes。
+- SHA-256 `6a4fc19b49cb5e0c73e61f838baf30e15f86bfd38f71a41919154af7f6034ea2`。
+- 取得manifest SHA-256 `dd0f487a3f18582e928189d810ccd1979c432cdcbc9cf0952594e17332c66a01`。
+- 国土数値情報N02-25の公式グループ003584の代表駅線中点：経度139.579809851903、緯度35.703144481201。EPSG:6677の東座標-22941.702420628m・北座標-32905.061209669m。
+- 中心から東西南北各500mの正方形、1,000,000m²。旧取得矩形は約40,201.594m²を覆わなかったため、必要範囲を同releaseから取得し直した。
 
-入力と取得manifestのハッシュ、release、AOI、件数、IDの一意性、座標を確認してから集計する。必要列は `id / geometry / basic_category / taxonomy.primary / taxonomy.hierarchy / taxonomy.alternates / operating_status`。DuckDBによる全列スキーマを生成manifestにも記録する。取得方法は[Overture編](overture.md)を参照。
+駅の出典・取得日・統合規則・CC BY 4.0は[入力と公開条件](region-feature-sources.md)に記録。駅の入口ではない。旧 `configs/aoi/kichijoji.toml` は実験01〜04の再現性のため変更しない。地域特徴量実験は新しい専用AOIを使用する。
 
-## 空間集計
+## 取得と計算
 
-- JGD2011 / Japan Plane Rectangular CS IX（EPSG:6677）。pyprojの `always_xy=True` により、コードのxは東、yは北。日本の平面直角座標の通常のX・Y表記と混同しない。
-- 投影座標の原点 `(0, 0)` に固定した250m・500m格子。国勢調査の地域メッシュとは別の独自格子。
-- 内部境界は `[下限, 上限)` として東側・北側に割り当てる。10nm以下の丸め誤差を補正。AOI外周は包含し、通常の割当先が面積ゼロの場合のみ、外周を覆う区画を行・列順で一意に選ぶ。1μmの投影境界誤差を許容する。
-- 緯度経度矩形の各辺を100分割して投影し、格子との交差面積を使用する。投影後の外接矩形で代用しない。1000分割との面積差も監査する。
-- 密度は登録件数 / AOI内の実面積(km²)。端の小さい区画も一律62,500m²にはしない。
-- 500mは同一原点・入力・採用条件。250mの件数・面積を親格子へまとめた値と照合する。
+取得コードは `python -m geoai_open_lab.acquire_station_square`。これは承認された取得作業の明示的実行用で、Notebookから呼ばない。固定N02 ZIPを `data/raw/region_features/station/N02-25_GML.zip` に置き、既存拡張httpfs/spatialをLOADする。対象releaseが取得不能なら停止する。駅代表点は `station_square.station_center()` で公式ZIPから再現できる。
 
-## カテゴリ・分母・欠損
+取得は正方形の逆投影境界を1000点で密に計算し、約1cmの余裕を持たせたbboxで候補を読み、EPSG:6677上の正方形で厳密に絞る。LIMIT・country・営業状態・confidenceによる除外なし。必要列 `id, geometry, bbox, basic_category, taxonomy, operating_status, sources` のみ保存。sources内licenseを保持し、全列スキーマ・取得範囲・件数・SHA-256をmanifestに記録する。
 
-各POIを単一の `basic_category` で1回だけ数える。taxonomyのprimary・hierarchy・alternatesは保存するが、展開して複数回数えない。元のbasic_category別集計を残す。
+投影はalways_xy=True（xは東、yは北）。南西角を格子原点に固定するため、250mは4×4、500mは2×2、部分区画なし。内部境界は東・北側の区画へ一意割当、最外周は包含。許容誤差は既存実装と同じ（格子境界10nm、幾何境界1μm）。全件数・面積・親格子合計を照合する。
 
-図だけの大分類は設定の `display_groups` に固定する。食事=`restaurant, casual_eatery`、カフェ=`cafe, coffee_shop`、バー=`bar`、衣料=`fashion_and_apparel_store`、美容等=`personal_or_beauty_service`、食品小売=`food_and_beverage_store`。これは本実験の表示用であり、全飲食業などを包括する体系や3provider共通カテゴリではない。未掲載の既知分類は `__OTHER__`、null/空文字は `__MISSING__` と分ける。
+平均密度は全件数÷1km²、構成比は各群合計÷全件数。格子の比率を単純平均しない。最大密度は250m区画の最大値、集中度は最大密度÷地域平均。登録数と密度は同じ数値となるが単位・役割が異なるため、類似度へ重複投入しない。
 
-構成比の分母は各格子の全登録件数（欠損も含む）。カテゴリ0件は比率0、格子全体0件の構成比は未定義。取得不完全なら集計を停止し、未取得を0件扱いしない。営業状態も欠損を別項目で集計し、欠損を営業中や閉店とは判定しない。
+## カテゴリと監査
 
-## 再現
+設定のdisplay_groupsが正本。食事=restaurant/casual_eatery、カフェ=cafe/coffee_shop、バー=bar、衣料=fashion_and_apparel_store、美容等=personal_or_beauty_service、食品小売=food_and_beverage_store。他の既知分類はその他、null/空文字は欠損。単一basic_categoryで数え、taxonomyの階層やalternatesを重複計上しない。
 
-`projects/poi/` で実行する。入力ファイルと取得manifest、DuckDB spatial拡張の既存キャッシュが必要。公開リポジトリには生データを含めないため、新規cloneだけでは今回の固定入力は揃わない。ファイルがなければ停止し、別releaseに置き換えない。追加取得には別途判断が必要。
+構成比の分母は欠損も含む全件数。0件地域の構成比・集中度は未定義。未取得は0件とせず停止。営業状態欠損は営業中と見なさない。面積・登録数・欠損率・release・取得日・AOI・格子条件は監査情報。密度・構成比・集中度は比較候補であり、採用列・正規化・距離関数は[次段階](tokyo-station-features-plan.md)で決める。
+
+## 再実行
+
+`projects/poi/` で実行する。初回環境は `uv sync --locked --group notebooks --group osm`。今回の既存環境・拡張を再利用し、パッケージ追加なし。固定入力のParquetと取得manifestが必要で、新規cloneには含まれない。取得済み入力がない場合は停止する。
 
 ```powershell
-uv sync --locked --group notebooks --group osm
-.venv/Scripts/python.exe -c "from geoai_open_lab.region_features import run_experiment; from geoai_open_lab.region_figures import save_figures; r,m,o=run_experiment(); save_figures(r,o); print(m['summary'])"
+.venv/Scripts/python.exe -c "from geoai_open_lab.region_features import run_experiment; from geoai_open_lab.region_figures import save_figures; r,m,o=run_experiment(); save_figures(r,o); print(m['region_profile'])"
 .venv/Scripts/python.exe -m jupyter lab notebooks/05_region_features.ipynb
 ```
 
-既存環境では `uv sync --locked --offline --group notebooks --group osm --no-install-project --inexact --cache-dir data/cache/uv` を確認した。これはインストール済みの本プロジェクトを再構築しないためのコマンドで、新規環境向けではない。既存osmグループが持つpyproj・shapely・pyarrowを再利用しており、OSMデータは使用しない。Matplotlibやフォント・背景地図の追加取得はせず、標準ライブラリでSVGを作る。
-
-`load_inputs()` は固定入力の検査と投影、`run_experiment()` は格子集計・地域1行の表生成・照合・manifest保存、`save_figures()` はプロフィール図と、算出根拠の地図・構成比図を担当する。Notebookはこの3関数を使う。
-
-出力先は `data/cache/region_features/kichijoji-v1/`。再実行で同じ名前を上書きする。主成果 `region_features.csv` と `region_profile.svg` に加え、`cells_*.csv`、`category_*.csv`、`display_group_*.csv`、`status_*.csv`、`assigned_*.parquet`、`manifest.json`、SVGを保存する。manifestに実行日時UTC、環境、入力・コード・設定・表のハッシュを残す。実行済みNotebookとHTMLも同フォルダに置き、Gitへ追加しない。
-
-## 出典・公開条件（2026-10-14確認）
-
-既存Overtureデータの条件は[利用ガイド](overture.md)を引き継ぐ。[公式Attribution](https://docs.overturemaps.org/attribution/)・[Places](https://docs.overturemaps.org/guides/places/)・[FAQ](https://overturemaps.org/about/faq/)を再確認した。PlacesにはCDLA-Permissive-2.0、Apache-2.0、CC0のソースがあり、コードのApache-2.0で外部データを再ライセンスしない。FAQが示す分析結果とデータ再配布の区別に基づき、今回公開するのは方法・集計値の説明。生データ・POI別表は公開しない。図にはOverture Maps Foundation、release・取得日を表示する。記事にも公式Attributionへのリンクを付ける。レコードを再配布する場合はソースごとのNOTICE等を別途確認する。
-
-座標系の選択根拠：[国土地理院・平面直角座標系](https://www.gsi.go.jp/sokuchikijun/jpc.html)。本実験は位置精度・カテゴリ精度・網羅性を保証せず、重複IDがないことは実店舗の重複がないことを意味しない。
-
-## 地域1行の集約
-
-`region_profile(runs, region_id, region_label)` は地域別に固定15列を返す。地域平均密度は合計件数÷合計面積、カテゴリ構成比は各群の合計件数÷全件数。格子ごとの比率を単純平均しない。集中度は250m最大密度÷地域平均。登録数・密度の重複評価や構成比の総和制約があるため、類似度への採用列は次段階で決める。release・取得日・AOI・格子条件はmanifest、欠損率は表とmanifestで監査する。
+出力先 `data/cache/region_features/kichijoji-1km-v2/`（同名出力は再実行で上書き）。主成果 `region_features.csv`・`region_profile.svg`、根拠の格子CSV・密度SVG、manifest、実行済みNotebook・HTMLはGit管理外。NOTICEとApacheライセンスも同フォルダに保存した。公開用Notebookは出力なし。公開物の条件は[出典とライセンス](region-feature-sources.md)を参照。
