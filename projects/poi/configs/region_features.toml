@@ -1,0 +1,22 @@
+experiment = "kichijoji-region-features-v1"
+input = "data/raw/overture/20260925T115558Z-2f21beb2/places.parquet"
+input_manifest = "data/raw/overture/20260925T115558Z-2f21beb2/manifest.json"
+input_run = "20260925T115558Z-2f21beb2"
+release = "2026-09-23.0"
+input_sha256 = "341993b170f5903c1725551a01850ca14094b9b2e76087b86be8e8aef60b9011"
+manifest_sha256 = "7883ae09a26eb546e52849d7d9dc5107132cd08d22de0b1e1b8eb931a1e1bff5"
+expected_rows = 3666
+aoi = "configs/aoi/kichijoji.toml"
+crs = "EPSG:6677"
+origin = [0.0, 0.0]
+grid_sizes = [250, 500]
+output = "data/cache/region_features/kichijoji-v1"
+# Display-only groups; unlisted non-null basic categories remain OTHER.
+# This is not a taxonomy shared across providers.
+[display_groups]
+restaurant = ["restaurant", "casual_eatery"]
+cafe = ["cafe", "coffee_shop"]
+bar = ["bar"]
+fashion = ["fashion_and_apparel_store"]
+beauty = ["personal_or_beauty_service"]
+food_store = ["food_and_beverage_store"]

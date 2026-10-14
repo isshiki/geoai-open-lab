@@ -16,3 +16,7 @@
 図版の署名は [masahiko.info](https://masahiko.info/) をタイトルと同じ高さの右上へ薄いグレーで表示する。データ出典は独立して表示。生成図版はGit管理外dataに保存し、記事へ渡す前に出典・利用条件・表示を確認する。
 
 移行時の解析条件・カテゴリ定義・snapshotは維持する。Foursquareの初回サンプル500件・カフェ37件は地域全体の店舗数ではない。比較記事の全件取得とは区別する。3ソースの優劣や真の網羅率をこの比較から断定しない。
+
+## 次の記事：地域特徴量（2026-10-14）
+
+[記事用の数値・図・構成案・注意点](region-features-article-handoff.md)を用意した。[Notebook 05](../notebooks/05_region_features.ipynb) / [再現方法](region-features.md) / [検証](region-features-validation.md)。実装と実行は完了、記事投稿は未実施。保存済みOverture単独・吉祥寺矩形内の実験であり、街同士の比較は次段階。
