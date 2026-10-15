@@ -6,7 +6,7 @@
 
 | プロジェクト | 内容 | 状態 |
 | --- | --- | --- |
-| [POI](projects/poi/README.md) | Foursquare・Overture・OSMの取得と比較、吉祥寺の地域特徴量 | 地域特徴量の固定入力検証済み・記事執筆待ち |
+| [POI](projects/poi/README.md) | Foursquare・Overture・OSMの取得と比較、吉祥寺の地域特徴量 | 地域特徴量の固定入力検証済み・2026-10-15にはてなブログ下書き作成済み（未公開） |
 | [駅の縄張り](projects/station-territory/README.md) | 東京23区の歩行道路網による駅の範囲とランキング | 移行・再現検証済み（公開条件確認は別途） |
 | [商圏・アクセスモデル](projects/retail-spatial-models/README.md) | 公開売上によるHuff検証と、独立したアクセス評価 | 将来候補・計画のみ（データ採用未確定） |
 

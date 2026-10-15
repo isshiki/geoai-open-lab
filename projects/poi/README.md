@@ -41,7 +41,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 次は地域特徴量→類似地点検索→クラスタリング→Region Embeddingです。カテゴリ共通化は必須工程から外し、統合が必要になったときに検討します。[記事ロードマップ](docs/roadmap.md) / [記事引き継ぎ](docs/article-handoff.md)。
 
-2026-10-14更新：当面はこの本筋を優先します。保存済みOvertureと吉祥寺AOIを使った地域特徴量の実装・検証が完了しました。3,591件を駅中心の250m16区画・500m4区画で集計しています。記事執筆はこれからです。[Notebook 05](notebooks/05_region_features.ipynb) / [方法](docs/region-features.md) / [検証](docs/region-features-validation.md) / [記事資料](docs/region-features-article-handoff.md)。駅の縄張りによるチェーン出店状況の比較は後続候補とし、個別アプリは分析と評価が整い、操作する用途が明確になった場合に別プロジェクトで検討します。各記事でのサービス新設は必須にしません。詳細・完了条件は [今後のタスクプラン](docs/roadmap.md#今後のタスクプラン2026-10-14更新) を参照してください。
+2026-10-15更新：当面はこの本筋を優先します。保存済みOvertureと吉祥寺AOIを使った地域特徴量の実装・検証が完了しました。3,591件を駅中心の250m16区画・500m4区画で集計しています。記事『POIデータから作る「地域特徴量」　Pythonで吉祥寺駅周辺を数値化してみた』は、ユーザー共有によると2026年10月15日にはてなブログへ下書き作成済みです（未公開）。[Notebook 05](notebooks/05_region_features.ipynb) / [方法](docs/region-features.md) / [検証](docs/region-features-validation.md) / [記事資料](docs/region-features-article-handoff.md)。駅の縄張りによるチェーン出店状況の比較は後続候補とし、個別アプリは分析と評価が整い、操作する用途が明確になった場合に別プロジェクトで検討します。各記事でのサービス新設は必須にしません。詳細・完了条件は [今後のタスクプラン](docs/roadmap.md#今後のタスクプラン2026-10-15更新) を参照してください。
 
 ブログ記事を公開したら、関連する実験・再現コマンド・固定したデータの版と相互リンクします。
 
