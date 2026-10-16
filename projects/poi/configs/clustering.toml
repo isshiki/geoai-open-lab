@@ -1,0 +1,4 @@
+input_dir = "data/cache/similar_regions/tokyo-v1"
+manifest_sha256 = "054c712aa5ffab370f1c802e89e62cc970fd0b48435721f6beb92bd5c96eb329"
+output_dir = "data/cache/clustering/tokyo-v1"
+expected_rows = 656
