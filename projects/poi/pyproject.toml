@@ -20,6 +20,9 @@ dependencies = [
 packages = ["src/geoai_open_lab"]
 
 [dependency-groups]
+clustering = [
+    "scikit-learn==1.9.0",
+]
 notebooks = [
     "ipykernel>=7.3.0",
     "jupyterlab>=4.6.4",
