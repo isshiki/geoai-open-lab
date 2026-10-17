@@ -36,3 +36,19 @@ K-meansは各方式の空間でk=3、seed42、n_init30、max_iter500、tol1e-4�
 テーマ内`data/cache/aoi_sensitivity/tokyo-v1/`にCSV、行列、manifest、SVG/PNG、実行済みNotebook/HTMLを保存する。出力は全てGit管理外。sources/licenseは元と追加のParquetに保持。Foursquare NOTICEとApache LICENSEを成果物へ同梱する。[出典条件](region-feature-sources.md)を継承する。
 
 部分格子・再学習を含むパイプライン感度であり、単なる距離パラメータだけの因果効果ではない。円形・徒歩圏・最適商圏は検証していない。
+
+## Aの格子端に関する追加品質確認
+
+記事の順位比較は[追加検証](aoi-sensitivity-validation.md)の完全250m区画版Aを使用する。旧実装と旧成果物は監査用に残す。
+保存済みfeatures.csvとaudit.csvのfull_cell_peakをSHA確認して使用し、変更するのは最大密度・集中度だけ。B/Cの学習やクラスタ再計算は行わない。
+
+```powershell
+uv run --no-sync python -m geoai_open_lab.aoi_full_cells
+uv run --no-sync python scripts/execute_aoi_sensitivity_notebook.py
+node scripts/render_aoi_sensitivity.cjs
+```
+
+Notebook 09は保存済みの全方式結果を前提にこの追加確認だけを実行する。元分析が無い場合は上記の初回実行手順が必要。
+追加成果物は`data/cache/aoi_sensitivity/a-full-cells-v1/`。旧`tokyo-v1/`は上書きしない。
+修正版のcluster_metrics.csvとassignments.csvは元分析の複製で、Aのクラスタは旧方式の監査値。図はCの分類だけを使う。
+完全区画数は16/16/16/36。探索対象の面積は1/1/1/2.25km²、集中度の分母はAOI全域の平均密度。

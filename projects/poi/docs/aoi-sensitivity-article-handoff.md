@@ -8,10 +8,10 @@
 
 - 500mの既存結果を再現した上で比較。主比較の候補集合は800m基準に統一。
 - 吉祥寺のCは500mで町田1位、800mで都電雑司ヶ谷1位・町田2位。共通は5/10駅。
-- 全駅平均の500→800m上位10共通数はA 1.97、B 3.31、C 3.19駅。Embeddingだけが変わったわけではない。
+- 全駅平均の500→800m上位10共通数はA 2.24（完全区画版）、B 3.31、C 3.19駅。Embeddingだけが変わったわけではない。
 - Cの分類ARIは0.609954、最大一致対応後の所属変更は97/656駅。吉祥寺は群3を維持。上位10と大きな3群の一致は別の尺度。
 - Cで石神前・柴崎体育館・京成関屋は共通0駅。六本木・自由が丘・浅草は8駅。平均だけでは個別の違いを説明できない。
-- 800mではAの最大密度が部分格子にある駅が334。Aの変化には端の区画と標準化の影響も含まれる。
+- 800mではAの最大密度が部分格子にある駅が334。旧Aを監査として残し、記事のAは完全区画版へ変更。800mの共通数は1.97→2.24駅、全順位相関は0.683→0.769。端の影響を除いても範囲への感度は残った。
 
 ## 記事の順序
 
@@ -24,12 +24,12 @@
 
 ## 実測値と再現
 
-全AOI×A/B/Cのトップ10、全駅平均・中央値・Spearman、クラスタと代表駅は[検証記録](aoi-sensitivity-validation.md)。数値の正本はローカル `data/cache/aoi_sensitivity/tokyo-v1/` のrankings.csv、summary.csv、station_stability.csv、cluster_metrics.csv、cluster_summary.csv、audit.csv、overlap_pairs.csv、manifest.json。
+全AOI×A/B/Cのトップ10、全駅平均・中央値・Spearman、クラスタと代表駅は[検証記録](aoi-sensitivity-validation.md)。数値の正本はローカル `data/cache/aoi_sensitivity/a-full-cells-v1/` のrankings.csv、summary.csv、station_stability.csv、comparison_summary.csv、manifest.json。クラスタの詳細・元監査・重複監査は旧tokyo-v1のcluster_summary.csv、audit.csv、overlap_pairs.csvを参照。
 
 [Notebook 09](../notebooks/09_aoi_sensitivity.ipynb) / [計算方法と実行手順](aoi-sensitivity.md)。
 
 ```python
-from geoai_open_lab.aoi_sensitivity import run
+from geoai_open_lab.aoi_full_cells import run
 summary, manifest, out = run()
 summary.round(3)
 ```
@@ -38,19 +38,34 @@ summary.round(3)
 
 すべてテーマ内のGit管理外。SVGと同名PNGがあり、ブログ側で利用する前に同梱NOTICE・出典・変更日を保持する。
 
-- `aoi_sizes.svg` / [PNG](../data/cache/aoi_sensitivity/tokyo-v1/aoi_sizes.png)：駅中心の正方形は1.00〜2.56km²。500〜800mは半幅。
-- `target_rankings.svg` / [PNG](../data/cache/aoi_sensitivity/tokyo-v1/target_rankings.png)：吉祥寺の上位10駅。共通・新規・圏外を区別。
-- `common_distribution.svg` / [PNG](../data/cache/aoi_sensitivity/tokyo-v1/common_distribution.png)：656駅に対する上位10共通数の分布。
-- `station_sensitivity.svg` / [PNG](../data/cache/aoi_sensitivity/tokyo-v1/station_sensitivity.png)：POI数と共通数、変化の大きい例・小さい例。
-- `cluster_changes.svg` / [PNG](../data/cache/aoi_sensitivity/tokyo-v1/cluster_changes.png)：Cの500→800mの最大一致対応後のクロス表。
-- `cover_1600x900.svg` / [PNG](../data/cache/aoi_sensitivity/tokyo-v1/cover_1600x900.png)：カバー：範囲変更で3方式とも結果が変わった。
+- `aoi_sizes.svg` / [PNG](../data/cache/aoi_sensitivity/a-full-cells-v1/aoi_sizes.png)：駅中心の正方形は1.00〜2.56km²。500〜800mは半幅。
+- `target_rankings.svg` / [PNG](../data/cache/aoi_sensitivity/a-full-cells-v1/target_rankings.png)：吉祥寺の上位10駅。共通・新規・圏外を区別。
+- `common_distribution.svg` / [PNG](../data/cache/aoi_sensitivity/a-full-cells-v1/common_distribution.png)：656駅に対する上位10共通数の分布。
+- `station_sensitivity.svg` / [PNG](../data/cache/aoi_sensitivity/a-full-cells-v1/station_sensitivity.png)：POI数と共通数、変化の大きい例・小さい例。
+- `cluster_changes.svg` / [PNG](../data/cache/aoi_sensitivity/a-full-cells-v1/cluster_changes.png)：Cの500→800mの最大一致対応後のクロス表。
+- `cover_1600x900.svg` / [PNG](../data/cache/aoi_sensitivity/a-full-cells-v1/cover_1600x900.png)：カバー：範囲変更で3方式とも結果が変わった。
 
-[実行結果HTML](../data/cache/aoi_sensitivity/tokyo-v1/09_aoi_sensitivity.html)。公開コードは [GitHub Notebook](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/notebooks/09_aoi_sensitivity.ipynb) と [実装](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/src/geoai_open_lab/aoi_sensitivity.py)。
+[実行結果HTML](../data/cache/aoi_sensitivity/a-full-cells-v1/09_aoi_sensitivity.html)。公開コードは [GitHub Notebook](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/notebooks/09_aoi_sensitivity.ipynb) と [実装](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/src/geoai_open_lab/aoi_sensitivity.py)。
 
 ## 書けないこと
 
 800mの方が高精度、最適商圏、順位が変わるから無意味、Embeddingだけ不安定とは書かない。既存3クラスタは優劣・Tierでない。追加されたカテゴリを順位変化の原因と断定しない。AOI重複する駅群を独立した街の発見として数えない。rental_kioskの具体的内容は未確認なので本文例から外す。
 
-Aは密度・構成比・集中度、B/Cは細分類構成。さらに部分格子・再学習・語彙固定が影響するため、方式間の差を単一原因で説明しない。次の候補は格子端の扱いを固定した追加感度や円形との比較だが、今回は未実施。
+Aは密度・構成比・集中度、B/Cは細分類構成。さらに部分格子・再学習・語彙固定が影響するため、方式間の差を単一原因で説明しない。格子端の追加品質確認は実施済み。円形との比較は未実施。
 
-全駅を個別に調べる場合は、同じ成果物フォルダのall_station_top10.csv（78,720行）を使用する。query_region_idで照会駅を選び、modeとhalf_width_mを指定すると上位10駅と500m順位が分かる。
+全駅を個別に調べる場合は、旧tokyo-v1のall_station_top10.csv（78,720行、旧AとB/C）を使用する。query_region_idで照会駅を選び、modeとhalf_width_mを指定すると上位10駅と500m順位が分かる。
+
+## Aの主結果を完全区画版へ変更
+
+記事は完全250m区画だけで最大密度・集中度を算出したAを主結果とする。小さな区画を最大値探索へ混ぜないためであり、順位が望ましくなったからではない。旧Aも比較表に残す。
+500→600/700/800mの上位10共通数は、旧A 3.96/3.01/1.97駅、修正版A 4.88/3.43/2.24駅。
+全順位Spearman平均は旧A 0.815/0.808/0.683、修正版A 0.932/0.853/0.769。
+吉祥寺800mは東北沢・池ノ上・九品仏・奥沢・世田谷代田・下北沢・都電雑司ヶ谷・自由が丘・新代田・町田。500mとの共通は3駅で変わらない。
+
+説明案：「端の小さな区画の影響を除くと、Aの変化はやや小さくなりました。それでも800mで残る上位駅は全駅平均2.24駅で、範囲による違いは大きく残りました。」
+
+完全区画の探索範囲は500/600/700mで中央1km四方、800mで中央1.5km四方。密度・構成比と集中度の分母はAOI全域。
+旧Aのクラスタ指標は修正版Aの指標として引用しない。Cの分類図とB/Cの結果は変更なし。
+新旧指標の根拠はcomparison_summary.csv、駅別はcomparison_station.csv。旧全結果・図は元のtokyo-v1に保持。
+
+修正版Aの全駅トップ10はa-full-cells-v1/all_station_top10_A.csv（26,240行）。旧AのCSVと取り違えない。

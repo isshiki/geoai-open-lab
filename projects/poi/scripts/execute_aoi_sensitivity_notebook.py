@@ -5,7 +5,7 @@ from nbclient import NotebookClient
 from nbconvert import HTMLExporter
 
 root=Path(__file__).resolve().parents[1]
-out=root/'data/cache/aoi_sensitivity/tokyo-v1'
+out=root/'data/cache/aoi_sensitivity/a-full-cells-v1'
 nb=nbformat.read(root/'notebooks/09_aoi_sensitivity.ipynb',as_version=4)
 NotebookClient(nb,timeout=300,startup_timeout=60,kernel_name='python3',resources={'metadata':{'path':str(root)}}).execute()
 nbformat.write(nb,out/'09_aoi_sensitivity.executed.ipynb')

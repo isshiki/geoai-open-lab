@@ -80,4 +80,4 @@
 
 ## AOIサイズ感度検証（2026-10-17）
 
-ユーザー承認の後続課題として[Notebook 09](../notebooks/09_aoi_sensitivity.ipynb)を追加。半幅500〜800m、656駅、固定961カテゴリで再学習し、共通候補集合で比較。500→800mの共通数は全駅平均A 1.97・B 3.31・C 3.19駅、CのARI 0.610・所属変更97駅。既存Embedding結果を変更せず、感度検証を別成果として保持。[検証](aoi-sensitivity-validation.md) / [記事資料](aoi-sensitivity-article-handoff.md)。記事は未執筆・未公開。円形AOIや部分格子の追加感度は後続候補、未実施。
+ユーザー承認の後続課題として[Notebook 09](../notebooks/09_aoi_sensitivity.ipynb)を追加。半幅500〜800m、656駅、固定961カテゴリで再学習し、共通候補集合で比較。500→800mの共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅、CのARI 0.610・所属変更97駅。既存Embedding結果を変更せず、感度検証を別成果として保持。[検証](aoi-sensitivity-validation.md) / [記事資料](aoi-sensitivity-article-handoff.md)。記事は未執筆・未公開。部分格子の品質確認を実施し、完全区画版Aを主結果へ変更。円形AOIは未実施。

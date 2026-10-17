@@ -9,13 +9,16 @@ from .clustering_figures import document,rect,line
 COLORS={500:'#0072b2',600:'#56b4e9',700:'#d55e00',800:'#c43939'}
 NAMES=('aoi_sizes','target_rankings','common_distribution','station_sensitivity','cluster_changes','cover_1600x900')
 
-def figures():
+def figures(out=OUT):
+    # Optional A-quality-check directory; original audit figures stay untouched.
+    OUT = out
     m=json.loads((OUT/'manifest.json').read_text(encoding='utf8'))
     ranks=pd.read_csv(OUT/'rankings.csv');stats=pd.read_csv(OUT/'station_stability.csv')
     metrics=pd.read_csv(OUT/'cluster_metrics.csv');summary=pd.read_csv(OUT/'summary.csv')
     paths=[]
     def save(name,title,subtitle,body):
         footer='半幅の色：500m 青 / 600m 水色 / 700m オレンジ / 800m 赤'
+        if 'a_peak_rule' in m: footer+='　Aの集中度：完全250m区画のみ'
         body+=text(60,785,footer,21)
         p=OUT/(name+'.svg')
         svg=document(title,subtitle,body,m).replace('2026-10-16','2026-10-17')

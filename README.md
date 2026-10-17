@@ -28,4 +28,4 @@ POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) /
 
 2026-10-17図版改訂：分析結果を固定し、POIからEmbeddingへの説明図・A/B/C比較・指標の読み方を初心者向けに改善しました。[記事資料](projects/poi/docs/embedding-article-handoff.md)。
 
-[AOIサイズの感度検証](projects/poi/notebooks/09_aoi_sensitivity.ipynb)：同じ656駅で半幅500〜800mを比較。500→800mの上位10共通数は全駅平均A 1.97・B 3.31・C 3.19駅、Cの分類ARIは0.610。最適商圏を決める実験ではありません。[検証](projects/poi/docs/aoi-sensitivity-validation.md) / [記事資料](projects/poi/docs/aoi-sensitivity-article-handoff.md)。
+[AOIサイズの感度検証](projects/poi/notebooks/09_aoi_sensitivity.ipynb)：同じ656駅で半幅500〜800mを比較。500→800mの上位10共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅、Cの分類ARIは0.610。最適商圏を決める実験ではありません。[検証](projects/poi/docs/aoi-sensitivity-validation.md) / [記事資料](projects/poi/docs/aoi-sensitivity-article-handoff.md)。

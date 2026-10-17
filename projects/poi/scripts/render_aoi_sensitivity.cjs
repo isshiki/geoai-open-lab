@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const fs=require('fs'); const path=require('path');
 (async()=>{
- const out=path.resolve(__dirname,'../data/cache/aoi_sensitivity/tokyo-v1');
+ const out=path.resolve(__dirname,'../data/cache/aoi_sensitivity/a-full-cells-v1');
  const browser=await chromium.launch({...(process.env.BROWSER_EXECUTABLE ? {executablePath:process.env.BROWSER_EXECUTABLE} : {}),headless:true});
  const page=await browser.newPage({viewport:{width:1600,height:900},deviceScaleFactor:1});
  await page.route('http://**/*',route=>route.abort());

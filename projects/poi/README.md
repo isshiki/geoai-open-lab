@@ -95,6 +95,6 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 ## 対象範囲への感度（2026-10-17）
 
-[Notebook 09](notebooks/09_aoi_sensitivity.ipynb)で、同じ656駅の正方形AOIを半幅500/600/700/800mに変更。500mの旧結果を再現し、全条件で800m基準の候補集合を使用しました。500→800mの上位10共通数は全駅平均A 1.97・B 3.31・C 3.19駅。Cの分類ARIは0.610、所属変更97駅。追加取得は同releaseの不足48件だけ。Aには部分格子による集中度の影響も含みます。
+[Notebook 09](notebooks/09_aoi_sensitivity.ipynb)で、同じ656駅の正方形AOIを半幅500/600/700/800mに変更。500mの旧結果を再現し、全条件で800m基準の候補集合を使用しました。500→800mの上位10共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅。Cの分類ARIは0.610、所属変更97駅。追加取得は同releaseの不足48件だけ。Aは完全250m区画で集中度を算出。旧Aの1.97駅も監査用に保持し、B/Cは変更していません。
 
 [計算方法](docs/aoi-sensitivity.md) / [固定仕様](docs/aoi-sensitivity-design.md) / [検証](docs/aoi-sensitivity-validation.md) / [記事資料](docs/aoi-sensitivity-article-handoff.md)。記事執筆・公開は未実施。
