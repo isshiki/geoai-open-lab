@@ -77,10 +77,16 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 2026-10-15、N02-25の656駅グループを同じ1km四方・15列で集計し、密度・構成・集中度の距離を検証しました。主順位は町田・自由が丘・立川南が上位。密度だけのトップ10とは共通0件で、条件変更への依存も報告します。吉祥寺とAOIが重なる駅は除外しますが、候補駅同士の重複は残ります。街の優劣や住みやすさを示しません。
 
-[Notebook 06](notebooks/06_similar_regions.ipynb) / [方法](docs/similar-regions.md) / [固定設計](docs/similar-regions-design.md) / [検証](docs/similar-regions-validation.md) / [記事引き継ぎ](docs/similar-regions-article-handoff.md)。ブログ原稿・公開は未実施。クラスタリングは次節で実測済み、Embeddingは後続です。
+[Notebook 06](notebooks/06_similar_regions.ipynb) / [方法](docs/similar-regions.md) / [固定設計](docs/similar-regions-design.md) / [検証](docs/similar-regions-validation.md) / [記事引き継ぎ](docs/similar-regions-article-handoff.md)。ブログ原稿・公開は未実施。クラスタリングは次節で実測済み、Embeddingも次節の記録で実測済みです。
 
 ## 地域特徴量のクラスタリング
 
 2026-10-16、同じ656駅の固定特徴量でk=3〜8を比較し、主結果を3群（244・247・165駅）としました。seed間ARI最小0.9749ですが、重複AOIを抑制した313駅で学習すると全駅のARIは0.2707。自然に分離した街種や、街の優劣を示すものではありません。データ追加取得なし、記事執筆・公開は未実施。
 
-[Notebook 07](notebooks/07_region_clustering.ipynb) / [方法](docs/clustering.md) / [設計](docs/clustering-design.md) / [選択理由](docs/clustering-selection.md) / [検証](docs/clustering-validation.md) / [記事引き継ぎ](docs/clustering-article-handoff.md)。次の候補はRegion Embeddingです。
+[Notebook 07](notebooks/07_region_clustering.ipynb) / [方法](docs/clustering.md) / [設計](docs/clustering-design.md) / [選択理由](docs/clustering-selection.md) / [検証](docs/clustering-validation.md) / [記事引き継ぎ](docs/clustering-article-handoff.md)。Region Embeddingは2026-10-17に実測済みです。
+
+## 地域Embedding（2026-10-17）
+
+保存済み656駅で961カテゴリのTF-IDFと64次元SVDを比較。近傍保持63.9%、POI分割の一致はB 30.2%に対しC 26.8%、前回分類とのARIは0.2880。安定性改善は確認できなかった。記事執筆・公開は未実施。
+
+[Notebook 08](notebooks/08_region_embedding.ipynb) / [方法](docs/embedding.md) / [検証](docs/embedding-validation.md) / [記事引き継ぎ](docs/embedding-article-handoff.md)。

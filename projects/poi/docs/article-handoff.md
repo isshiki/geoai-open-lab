@@ -33,4 +33,10 @@
 
 ## クラスタリングの記事（2026-10-16）
 
-[記事引き継ぎ](clustering-article-handoff.md)に3群の特徴・代表駅、k選択、seed/Ward/重複抑制の感度と図のパスを記録。実装・検証済み、記事執筆・公開は未実施。類似検索の「吉祥寺との距離」と今回の「基準点なしの分割」を区別する。Region Embeddingは次の未実施工程。
+[記事引き継ぎ](clustering-article-handoff.md)に3群の特徴・代表駅、k選択、seed/Ward/重複抑制の感度と図のパスを記録。実装・検証済み、記事執筆・公開は未実施。類似検索の「吉祥寺との距離」と今回の「基準点なしの分割」を区別する。Region Embeddingは下記のとおり実測済み。
+
+## 地域Embedding（2026-10-17）
+
+保存済み656駅で961カテゴリのTF-IDFと64次元SVDを比較。近傍保持63.9%、POI分割の一致はB 30.2%に対しC 26.8%、前回分類とのARIは0.2880。安定性改善は確認できなかった。記事執筆・公開は未実施。
+
+[Notebook 08](../notebooks/08_region_embedding.ipynb) / [方法](embedding.md) / [検証](embedding-validation.md) / [記事引き継ぎ](embedding-article-handoff.md)。

@@ -6,7 +6,7 @@
 
 | プロジェクト | 内容 | 状態 |
 | --- | --- | --- |
-| [POI](projects/poi/README.md) | Foursquare・Overture・OSMの取得と比較、地域特徴量・東京都内駅の類似検索 | 地域特徴量記事は下書き済み（未公開）、656駅の類似検索・クラスタリングを実測済み |
+| [POI](projects/poi/README.md) | Foursquare・Overture・OSMの取得と比較、地域特徴量・東京都内駅の類似検索 | 地域特徴量記事は下書き済み（未公開）、656駅の類似検索・クラスタリング・Embeddingを実測済み |
 | [駅の縄張り](projects/station-territory/README.md) | 東京23区の歩行道路網による駅の範囲とランキング | 移行・再現検証済み（公開条件確認は別途） |
 | [商圏・アクセスモデル](projects/retail-spatial-models/README.md) | 公開売上によるHuff検証と、独立したアクセス評価 | 将来候補・計画のみ（データ採用未確定） |
 
@@ -23,3 +23,5 @@ POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) /
 地域特徴量の主成果は「1地域＝1行」の数値プロフィールです。吉祥寺駅周辺1km四方について15列を生成し、格子集計は算出根拠として保持しています。Notebook 05は生の特徴量を示し、Notebook 06では固定した採用列・標準化による類似検索を検証しています。
 
 [地域特徴量のクラスタリング](projects/poi/notebooks/07_region_clustering.ipynb) / [検証](projects/poi/docs/clustering-validation.md) / [記事資料](projects/poi/docs/clustering-article-handoff.md)。3群は選択したPOI特徴による粗い分類で、重複AOIの抑制に依存します。
+
+[地域Embedding](projects/poi/notebooks/08_region_embedding.ipynb) / [検証](projects/poi/docs/embedding-validation.md) / [記事資料](projects/poi/docs/embedding-article-handoff.md)。961カテゴリ→64次元を検証し、圧縮による安定性改善は確認できませんでした。記事は未執筆・未公開です。
