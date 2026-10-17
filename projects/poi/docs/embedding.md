@@ -40,3 +40,5 @@ node scripts/render_embedding_figures.cjs
 ```
 
 2026-10-17の改訂ではこの経路のみを使用。入力・学習コード・公開Notebook・CSV・行列・manifestは変更しない。旧実行HTMLには当時の図が埋め込まれるため、記事には改訂後の独立SVG/PNGを使う。
+
+後続の[AOIサイズ感度検証](aoi-sensitivity.md)では500m基準を再現してから半幅600〜800mへ拡張。本ページの元実験は変更していません。

@@ -164,3 +164,7 @@ GeoAIでは地域統計・POIなどの地域属性や、地理的な関係、衛
 | [Google Satellite Embedding V1](https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_SATELLITE_EMBEDDING_V1_ANNUAL) | 複数のEarth Observationデータから地表の年間の特徴を64次元へ表現。今回と同じ64次元でも意味・単位・モデルは異なる |
 
 6件の公式URLは2026-10-17確認。背景説明として要約・リンクのみ使用し、第三者の図・文章・データ・モデルは転載・取得していない。新規データソースの採用や、再配布条件の承認を意味しない。公式scikit-learnサイトの現行版表示と、実験に固定した1.9.0は区別する。
+
+## 後続の範囲感度検証
+
+[別の引き継ぎ資料](aoi-sensitivity-article-handoff.md)で半幅500〜800mの比較を記録しました。本記事の入力・数値・順位は変更していません。新しい結果を既存の500m結果へ混在させないでください。

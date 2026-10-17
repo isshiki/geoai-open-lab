@@ -77,3 +77,7 @@
 ## Region Embedding完了記録（2026-10-17）
 
 [設計](embedding-design.md)に従い、Aの8特徴・Bの961カテゴリTF-IDF・Cの64次元SVDを比較。次元8/16/32/64、seed、共有POIの相補分割、重複抑制を検証。近傍保持63.9%、POI分割の一致26.8%はBの30.2%を下回った。前回3群とのARIは0.2880。用途を決めずEmbeddingを優位と扱わない。[検証](embedding-validation.md) / [記事資料](embedding-article-handoff.md)。本線1〜4の実装が揃ったが、記事公開状態とは別。次の実装は用途・評価課題を決めてから承認を得る。
+
+## AOIサイズ感度検証（2026-10-17）
+
+ユーザー承認の後続課題として[Notebook 09](../notebooks/09_aoi_sensitivity.ipynb)を追加。半幅500〜800m、656駅、固定961カテゴリで再学習し、共通候補集合で比較。500→800mの共通数は全駅平均A 1.97・B 3.31・C 3.19駅、CのARI 0.610・所属変更97駅。既存Embedding結果を変更せず、感度検証を別成果として保持。[検証](aoi-sensitivity-validation.md) / [記事資料](aoi-sensitivity-article-handoff.md)。記事は未執筆・未公開。円形AOIや部分格子の追加感度は後続候補、未実施。
