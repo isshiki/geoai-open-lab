@@ -90,3 +90,5 @@ data/cache/           ローカルキャッシュ（Git管理外）
 保存済み656駅で961カテゴリのTF-IDFと64次元SVDを比較。近傍保持63.9%、POI分割の一致はB 30.2%に対しC 26.8%、前回分類とのARIは0.2880。安定性改善は確認できなかった。記事執筆・公開は未実施。
 
 [Notebook 08](notebooks/08_region_embedding.ipynb) / [方法](docs/embedding.md) / [検証](docs/embedding-validation.md) / [記事引き継ぎ](docs/embedding-article-handoff.md)。
+
+2026-10-17図版改訂：分析結果を固定し、POIからEmbeddingへの説明図・A/B/C比較・指標の読み方を初心者向けに改善しました。[記事資料](docs/embedding-article-handoff.md)。

@@ -16,7 +16,7 @@ Notebook実行も全分析を再実行するため、CLIとNotebookを両方実�
 
 `embedding_input.load_categories()`は入力SHA、駅ID、AOI内件数を検査し、共有POIの割当行列とprimaryカテゴリ件数を作る。
 `region_embedding.run_embedding()`は前回Aの再現照合、TF-IDF、SVD、次元・seed・POI分割・重複の感度確認、k=3分類、寄与分解、manifest保存を行う。
-`embedding_figures.save_embedding_figures()`は実測出力からSVG6枚を作る。PNGは既存Playwright/ブラウザを使う`node scripts/render_embedding_figures.cjs`で生成する。追加インストールは必要ない既存環境で行う。
+`embedding_figures.save_embedding_figures()`は実測出力からSVG7枚を作る。PNGは既存Playwright/ブラウザを使う`node scripts/render_embedding_figures.cjs`で生成する。追加インストールは必要ない既存環境で行う。
 
 `data/cache/embedding/tokyo-v1/`は同一固定実験の再実行で上書きする。CSV/行列/図/HTML/NotebookはGit管理外。
 POI名・チェーン名は読まず、primaryだけ使用。alternatesは使わない。語彙の5駅条件は学習標本の空間重複にも影響される。
@@ -29,3 +29,14 @@ SVDは非中心化TF-IDFを圧縮する線形法。説明分散はscikit-learn�
 
 カテゴリ寄与はコサイン内積の加法分解で、順位変化の因果説明ではない。Bはカテゴリ積、Cは低ランク射影を挟んだ内積分解。負の係数もあり得る。潜在軸の符号と群番号は意味のある順序ではない。
 [データポリシー](../../../docs/data-policy.md)と[出典条件](region-feature-sources.md)を維持。元データのsources/licenseを残し、加工日・Foursquare NOTICEとApache本文を成果物へ引き継ぐ。派生ベクトルの公開許諾を包括的に判断しない。
+
+## 図版だけを再生成する
+
+モデル学習やNotebook全セル実行をせず、保存済み結果から表示だけを更新する場合は次を実行する。
+
+```powershell
+uv run --locked --offline --group clustering --group osm --group notebooks python -c "from geoai_open_lab.embedding_figures import save_embedding_figures; save_embedding_figures('data/cache/embedding/tokyo-v1')"
+node scripts/render_embedding_figures.cjs
+```
+
+2026-10-17の改訂ではこの経路のみを使用。入力・学習コード・公開Notebook・CSV・行列・manifestは変更しない。旧実行HTMLには当時の図が埋め込まれるため、記事には改訂後の独立SVG/PNGを使う。

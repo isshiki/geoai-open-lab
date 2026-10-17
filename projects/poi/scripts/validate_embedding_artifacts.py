@@ -56,7 +56,7 @@ for cell in nb['cells']:
     if cell['cell_type']=='code':assert cell['outputs']==[] and cell['execution_count'] is None
 executed=json.loads((out/'08_region_embedding.executed.ipynb').read_text(encoding='utf8'))
 assert all(c['execution_count'] is not None for c in executed['cells'] if c['cell_type']=='code')
-for name in ('representations','neighbors','dimensions','clusters','latent_axes','cover_1600x900'):
+for name in ('embedding_flow','representations','neighbors','dimensions','clusters','latent_axes','cover_1600x900'):
     raw=(out/(name+'.png')).read_bytes()
     assert raw[:8]==b'\x89PNG\r\n\x1a\n'
     assert int.from_bytes(raw[16:20],'big')==1600 and int.from_bytes(raw[20:24],'big')==900
@@ -76,5 +76,5 @@ for r in metrics.itertuples():
     assert f'{r.explained_variance:.4f}' in validation and f'{r.split_mean:.4f}' in validation
     assert f'{r.b_retention_mean:.1%}' in (out/'dimensions.svg').read_text(encoding='utf8')
 for r in summary.itertuples():
-    assert f'C{r.cluster}：{r.count}駅' in (out/'clusters.svg').read_text(encoding='utf8')
-print('Verified checksums, counts, TF-IDF, projection, metrics, nearest stations, cluster representatives, Notebook and 6 figures.')
+    assert f'群{r.cluster}：{r.count}駅' in (out/'clusters.svg').read_text(encoding='utf8')
+print('Verified checksums, counts, TF-IDF, projection, metrics, nearest stations, cluster representatives, Notebook and 7 figures.')

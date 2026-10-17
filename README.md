@@ -25,3 +25,5 @@ POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) /
 [地域特徴量のクラスタリング](projects/poi/notebooks/07_region_clustering.ipynb) / [検証](projects/poi/docs/clustering-validation.md) / [記事資料](projects/poi/docs/clustering-article-handoff.md)。3群は選択したPOI特徴による粗い分類で、重複AOIの抑制に依存します。
 
 [地域Embedding](projects/poi/notebooks/08_region_embedding.ipynb) / [検証](projects/poi/docs/embedding-validation.md) / [記事資料](projects/poi/docs/embedding-article-handoff.md)。961カテゴリ→64次元を検証し、圧縮による安定性改善は確認できませんでした。記事は未執筆・未公開です。
+
+2026-10-17図版改訂：分析結果を固定し、POIからEmbeddingへの説明図・A/B/C比較・指標の読み方を初心者向けに改善しました。[記事資料](projects/poi/docs/embedding-article-handoff.md)。
