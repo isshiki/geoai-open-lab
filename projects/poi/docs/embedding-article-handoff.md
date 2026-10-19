@@ -2,7 +2,7 @@
 
 仮タイトル：**街をベクトルで表すと何が変わる？　Pythonで地域Embeddingを試してみた**
 
-2026-10-17実装・実測。記事執筆・公開は未実施。[検証記録](embedding-validation.md)が数値の正本。
+2026-10-17実装・実測。[記事](https://blog.masahiko.info/entry/2026/10/17/162343)は2026年10月19日に公開済み。[検証記録](embedding-validation.md)が数値の正本。
 [設計](embedding-design.md) / [採用次元の理由](embedding-selection.md) / [実行方法](embedding.md)。
 
 ## 読者に伝える主結果

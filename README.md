@@ -6,7 +6,7 @@
 
 | プロジェクト | 内容 | 状態 |
 | --- | --- | --- |
-| [POI](projects/poi/README.md) | Foursquare・Overture・OSMの取得と比較、地域特徴量・東京都内駅の類似検索 | 地域特徴量記事は下書き済み（未公開）、656駅の類似検索・クラスタリング・Embeddingを実測済み |
+| [POI](projects/poi/README.md) | Foursquare・Overture・OSMの取得と比較、地域特徴量・東京都内駅の類似検索 | 地域特徴量からEmbeddingまで4記事を公開、AOI感度記事は2026-10-20公開予約済み |
 | [駅の縄張り](projects/station-territory/README.md) | 東京23区の歩行道路網による駅の範囲とランキング | 移行・再現検証済み（公開条件確認は別途） |
 | [商圏・アクセスモデル](projects/retail-spatial-models/README.md) | 公開売上によるHuff検証と、独立したアクセス評価 | 将来候補・計画のみ（データ採用未確定） |
 
@@ -24,8 +24,8 @@ POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) /
 
 [地域特徴量のクラスタリング](projects/poi/notebooks/07_region_clustering.ipynb) / [検証](projects/poi/docs/clustering-validation.md) / [記事資料](projects/poi/docs/clustering-article-handoff.md)。3群は選択したPOI特徴による粗い分類で、重複AOIの抑制に依存します。
 
-[地域Embedding](projects/poi/notebooks/08_region_embedding.ipynb) / [検証](projects/poi/docs/embedding-validation.md) / [記事資料](projects/poi/docs/embedding-article-handoff.md)。961カテゴリ→64次元を検証し、圧縮による安定性改善は確認できませんでした。記事は未執筆・未公開です。
+[地域Embedding](projects/poi/notebooks/08_region_embedding.ipynb) / [検証](projects/poi/docs/embedding-validation.md) / [記事資料](projects/poi/docs/embedding-article-handoff.md)。961カテゴリ→64次元を検証し、圧縮による安定性改善は確認できませんでした。[解説記事](https://blog.masahiko.info/entry/2026/10/17/162343)を公開済みです。
 
 2026-10-17図版改訂：分析結果を固定し、POIからEmbeddingへの説明図・A/B/C比較・指標の読み方を初心者向けに改善しました。[記事資料](projects/poi/docs/embedding-article-handoff.md)。
 
-[AOIサイズの感度検証](projects/poi/notebooks/09_aoi_sensitivity.ipynb)：同じ656駅で半幅500〜800mを比較。500→800mの上位10共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅、Cの分類ARIは0.610。最適商圏を決める実験ではありません。[検証](projects/poi/docs/aoi-sensitivity-validation.md) / [記事資料](projects/poi/docs/aoi-sensitivity-article-handoff.md)。
+[AOIサイズの感度検証](projects/poi/notebooks/09_aoi_sensitivity.ipynb)：同じ656駅で半幅500〜800mを比較。500→800mの上位10共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅、Cの分類ARIは0.610。最適商圏を決める実験ではありません。[検証](projects/poi/docs/aoi-sensitivity-validation.md) / [記事資料](projects/poi/docs/aoi-sensitivity-article-handoff.md)。記事は2026-10-20 11:50（日本時間）に公開予約済みです。

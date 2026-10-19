@@ -2,7 +2,7 @@
 
 [Notebook 06](../notebooks/06_similar_regions.ipynb) / [分析前設計](similar-regions-design.md) / [検証](similar-regions-validation.md) / [記事引き継ぎ](similar-regions-article-handoff.md)
 
-東京都内の656駅グループを、駅中心1km四方・schema version 1の15列へ変換した。吉祥寺の3,591件・全数値とPOI ID集合は前回に一致。類似度は密度・種類の構成・集中度の3ブロックによる。クラスタリング・Embedding・ブログ公開は実施していない。
+東京都内の656駅グループを、駅中心1km四方・schema version 1の15列へ変換した。吉祥寺の3,591件・全数値とPOI ID集合は前回に一致。類似度は密度・種類の構成・集中度の3ブロックによる。クラスタリングとEmbeddingは後続の別実験として実施した。[この記事](https://blog.masahiko.info/entry/2026/10/15/203743)は2026年10月15日に公開済み。
 
 ## 固定入力と再現
 

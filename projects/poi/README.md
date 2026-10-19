@@ -41,7 +41,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 次は地域特徴量→類似地点検索→クラスタリング→Region Embeddingです。カテゴリ共通化は必須工程から外し、統合が必要になったときに検討します。[記事ロードマップ](docs/roadmap.md) / [記事引き継ぎ](docs/article-handoff.md)。
 
-2026-10-15更新：当面はこの本筋を優先します。保存済みOvertureと吉祥寺AOIを使った地域特徴量の実装・検証が完了しました。3,591件を駅中心の250m16区画・500m4区画で集計しています。記事『POIデータから作る「地域特徴量」　Pythonで吉祥寺駅周辺を数値化してみた』は、ユーザー共有によると2026年10月15日にはてなブログへ下書き作成済みです（未公開）。[Notebook 05](notebooks/05_region_features.ipynb) / [方法](docs/region-features.md) / [検証](docs/region-features-validation.md) / [記事資料](docs/region-features-article-handoff.md)。駅の縄張りによるチェーン出店状況の比較は後続候補とし、個別アプリは分析と評価が整い、操作する用途が明確になった場合に別プロジェクトで検討します。各記事でのサービス新設は必須にしません。詳細・完了条件は [今後のタスクプラン](docs/roadmap.md#今後のタスクプラン2026-10-15更新) を参照してください。
+2026-10-19更新：保存済みOvertureと吉祥寺AOIを使った地域特徴量の実装・検証が完了しました。3,591件を駅中心の250m16区画・500m4区画で集計しています。[記事『POIデータから作る「地域特徴量」　Pythonで吉祥寺駅周辺を数値化してみた』](https://blog.masahiko.info/entry/2026/10/15/140624)を2026年10月15日に公開しました。[Notebook 05](notebooks/05_region_features.ipynb) / [方法](docs/region-features.md) / [検証](docs/region-features-validation.md) / [記事資料](docs/region-features-article-handoff.md)。駅の縄張りによるチェーン出店状況の比較は後続候補とし、個別アプリは分析と評価が整い、操作する用途が明確になった場合に別プロジェクトで検討します。各記事でのサービス新設は必須にしません。詳細・完了条件は [今後のタスクプラン](docs/roadmap.md#今後のタスクプラン2026-10-19更新) を参照してください。
 
 ブログ記事を公開したら、関連する実験・再現コマンド・固定したデータの版と相互リンクします。
 
@@ -77,17 +77,17 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 2026-10-15、N02-25の656駅グループを同じ1km四方・15列で集計し、密度・構成・集中度の距離を検証しました。主順位は町田・自由が丘・立川南が上位。密度だけのトップ10とは共通0件で、条件変更への依存も報告します。吉祥寺とAOIが重なる駅は除外しますが、候補駅同士の重複は残ります。街の優劣や住みやすさを示しません。
 
-[Notebook 06](notebooks/06_similar_regions.ipynb) / [方法](docs/similar-regions.md) / [固定設計](docs/similar-regions-design.md) / [検証](docs/similar-regions-validation.md) / [記事引き継ぎ](docs/similar-regions-article-handoff.md)。ブログ原稿・公開は未実施。クラスタリングは次節で実測済み、Embeddingも次節の記録で実測済みです。
+[Notebook 06](notebooks/06_similar_regions.ipynb) / [方法](docs/similar-regions.md) / [固定設計](docs/similar-regions-design.md) / [検証](docs/similar-regions-validation.md) / [記事引き継ぎ](docs/similar-regions-article-handoff.md) / [公開記事](https://blog.masahiko.info/entry/2026/10/15/203743)。クラスタリングは次節で実測済み、Embeddingも次節の記録で実測済みです。
 
 ## 地域特徴量のクラスタリング
 
-2026-10-16、同じ656駅の固定特徴量でk=3〜8を比較し、主結果を3群（244・247・165駅）としました。seed間ARI最小0.9749ですが、重複AOIを抑制した313駅で学習すると全駅のARIは0.2707。自然に分離した街種や、街の優劣を示すものではありません。データ追加取得なし、記事執筆・公開は未実施。
+2026-10-16、同じ656駅の固定特徴量でk=3〜8を比較し、主結果を3群（244・247・165駅）としました。seed間ARI最小0.9749ですが、重複AOIを抑制した313駅で学習すると全駅のARIは0.2707。自然に分離した街種や、街の優劣を示すものではありません。データ追加取得なし。[解説記事](https://blog.masahiko.info/entry/2026/10/16/233348)を公開済みです。
 
 [Notebook 07](notebooks/07_region_clustering.ipynb) / [方法](docs/clustering.md) / [設計](docs/clustering-design.md) / [選択理由](docs/clustering-selection.md) / [検証](docs/clustering-validation.md) / [記事引き継ぎ](docs/clustering-article-handoff.md)。Region Embeddingは2026-10-17に実測済みです。
 
 ## 地域Embedding（2026-10-17）
 
-保存済み656駅で961カテゴリのTF-IDFと64次元SVDを比較。近傍保持63.9%、POI分割の一致はB 30.2%に対しC 26.8%、前回分類とのARIは0.2880。安定性改善は確認できなかった。記事執筆・公開は未実施。
+保存済み656駅で961カテゴリのTF-IDFと64次元SVDを比較。近傍保持63.9%、POI分割の一致はB 30.2%に対しC 26.8%、前回分類とのARIは0.2880。安定性改善は確認できなかった。[解説記事](https://blog.masahiko.info/entry/2026/10/17/162343)を公開済みです。
 
 [Notebook 08](notebooks/08_region_embedding.ipynb) / [方法](docs/embedding.md) / [検証](docs/embedding-validation.md) / [記事引き継ぎ](docs/embedding-article-handoff.md)。
 
@@ -97,4 +97,4 @@ data/cache/           ローカルキャッシュ（Git管理外）
 
 [Notebook 09](notebooks/09_aoi_sensitivity.ipynb)で、同じ656駅の正方形AOIを半幅500/600/700/800mに変更。500mの旧結果を再現し、全条件で800m基準の候補集合を使用しました。500→800mの上位10共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅。Cの分類ARIは0.610、所属変更97駅。追加取得は同releaseの不足48件だけ。Aは完全250m区画で集中度を算出。旧Aの1.97駅も監査用に保持し、B/Cは変更していません。
 
-[計算方法](docs/aoi-sensitivity.md) / [固定仕様](docs/aoi-sensitivity-design.md) / [検証](docs/aoi-sensitivity-validation.md) / [記事資料](docs/aoi-sensitivity-article-handoff.md)。記事執筆・公開は未実施。
+[計算方法](docs/aoi-sensitivity.md) / [固定仕様](docs/aoi-sensitivity-design.md) / [検証](docs/aoi-sensitivity-validation.md) / [記事資料](docs/aoi-sensitivity-article-handoff.md)。記事は2026-10-20 11:50（日本時間）に公開予約済みです。
