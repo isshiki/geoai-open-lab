@@ -48,3 +48,7 @@
 ## 駅周辺の範囲定義（Notebook 11）
 
 [記事資料](walking-range-article-handoff.md)と[計算方法](walking-range.md)を追加。仮タイトル『駅周辺は半径500mでよい？ PythonとOpenStreetMapで徒歩圏を比べてみた』。固定道路網で吉祥寺4条件の実測・図版を作成。記事は未執筆・未公開。既存Notebook 09/10とは独立した検証。
+
+## 駅周辺の範囲定義：656駅の補足（Notebook 11b）
+
+[補足記事資料](walking-sensitivity-article-handoff.md)と[検証記録](walking-sensitivity-validation.md)。全駅の四方対道路800mのJ中央値0.782818、吉祥寺0.940357は96.57百分位。全駅値と和集合30件以上の図の値を区別します。Notebook 11の記事へ補足するか独立記事にするかは未決定。既存11の結果と記事資料を変更せず保持します。

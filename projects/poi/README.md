@@ -108,3 +108,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 [Notebook 11](notebooks/11_walking_range.ipynb)：吉祥寺の1km四方3,591件、半径500m3,481件、徒歩5分2,141件、徒歩10分3,794件。徒歩10分と正方形のJaccardは0.940357。80m/分・駅/POI接続100m上限の条件付き比較で、唯一の駅勢圏を決めるものではありません。[方法](docs/walking-range.md) / [検証・記事資料](docs/walking-range-article-handoff.md)。
 
 道路はeki-walkで作成済みのGeofabrik関東2026-10-01版を再利用し、ライブAPIを使わず再現性を確保。© OpenStreetMap contributors / [ODbL 1.0](https://www.openstreetmap.org/copyright)。元PBF SHA-256: `5e0b1bec8d8754a18db3950c6a39e4921e8c19069106a1ac038731f3d250ca83`。初回は`--road-dir`と`--osm-pbf`でローカル入力を指定し、以降はGit管理外の部分キャッシュを使います。道路の図示はノード間の概略線。既存Notebook 09/10と既存結果は変更せず、記事は未公開です。
+
+## 駅周辺の範囲定義：656駅の補足（Notebook 11b）
+
+[Notebook 11b](notebooks/11b_walking_sensitivity.ipynb)を独立して追加。全656駅の四方対道路800mはJaccard中央値0.782818、吉祥寺0.940357は96.57百分位。同じ500mの直線対道路は中央値0.666667。距離上限と定義方法を分け、低POI数の駅も別表で報告します。[事前設計](docs/walking-sensitivity-design.md) / [検証](docs/walking-sensitivity-validation.md) / [記事資料](docs/walking-sensitivity-article-handoff.md)。既存11・固定入力を維持、新規取得なし。
