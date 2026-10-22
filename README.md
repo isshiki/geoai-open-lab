@@ -29,3 +29,7 @@ POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) /
 2026-10-17図版改訂：分析結果を固定し、POIからEmbeddingへの説明図・A/B/C比較・指標の読み方を初心者向けに改善しました。[記事資料](projects/poi/docs/embedding-article-handoff.md)。
 
 [AOIサイズの感度検証](projects/poi/notebooks/09_aoi_sensitivity.ipynb)：同じ656駅で半幅500〜800mを比較。500→800mの上位10共通数は全駅平均A 2.24（完全区画版）・B 3.31・C 3.19駅、Cの分類ARIは0.610。最適商圏を決める実験ではありません。[検証](projects/poi/docs/aoi-sensitivity-validation.md) / [記事資料](projects/poi/docs/aoi-sensitivity-article-handoff.md)。記事は2026-10-20 11:50（日本時間）に公開予約済みです。
+
+## MAUP実験（2026-10-22）
+
+[Notebook 10](projects/poi/notebooks/10_maup.ipynb)：吉祥寺駅中心の固定4km四方・8,750件を5方式で分割。全体平均密度は同じでも分布・相関が変わるかを検証。Notebook 09とは独立。[記事引き継ぎ](projects/poi/docs/maup-article-handoff.md)。記事は未執筆・未公開。
