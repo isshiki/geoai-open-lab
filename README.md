@@ -39,3 +39,7 @@ POIテーマの[駅周辺の範囲定義](projects/poi/docs/walking-range-articl
 ## 駅周辺の範囲定義：656駅の補足検証
 
 [Notebook 11b](projects/poi/notebooks/11b_walking_sensitivity.ipynb)で既存656駅を比較しました。四方対道路800mのJaccard中央値は全駅0.782818、吉祥寺0.940357は96.57百分位。同じ500mの直線対道路は中央値0.666667。Notebook 11と既存結果は維持し、新規取得なし。[検証](projects/poi/docs/walking-sensitivity-validation.md) / [記事資料](projects/poi/docs/walking-sensitivity-article-handoff.md)。記事は未公開です。
+
+## 記事構成の更新：駅周辺を定義する3方式
+
+新宿を主例、吉祥寺を対照とする[記事引き継ぎ](projects/poi/docs/station-range-methods-article-handoff.md)を追加しました。正方形・直線500m・道路500mを同じ形式で656駅に適用し、使い分けを説明します。[検証](projects/poi/docs/station-range-methods-validation.md)。Notebook 11・11bと保存済み結果は保持、記事は未公開です。

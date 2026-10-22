@@ -112,3 +112,7 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ## 駅周辺の範囲定義：656駅の補足（Notebook 11b）
 
 [Notebook 11b](notebooks/11b_walking_sensitivity.ipynb)を独立して追加。全656駅の四方対道路800mはJaccard中央値0.782818、吉祥寺0.940357は96.57百分位。同じ500mの直線対道路は中央値0.666667。距離上限と定義方法を分け、低POI数の駅も別表で報告します。[事前設計](docs/walking-sensitivity-design.md) / [検証](docs/walking-sensitivity-validation.md) / [記事資料](docs/walking-sensitivity-article-handoff.md)。既存11・固定入力を維持、新規取得なし。
+
+### 記事構成：駅周辺を定義する3方式の使い分け
+
+[新しい記事資料](docs/station-range-methods-article-handoff.md)は新宿を主例、吉祥寺を対照に使用。全656駅のJ中央値は正方形対円0.855233、正方形対道路500m 0.566022、円対道路500m 0.666667。[追加検証](docs/station-range-methods-validation.md)。既存Notebook 11・11bと結果は変更せず、追加スクリプトで集計しました。

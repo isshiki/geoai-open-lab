@@ -108,3 +108,7 @@ display(SVG(filename=str(OUT / 'distributions.svg')))
 道路はGeofabrik関東2026-10-01版、取得記録2026-10-03。PBF SHA-256 `5e0b1bec8d8754a18db3950c6a39e4921e8c19069106a1ac038731f3d250ca83`。固定入力は再現性のため維持。新規ダウンロードなし。
 
 コードと説明文はApache-2.0、外部データはそれぞれの条件を維持。図をブログへ公開する際はOSMの帰属とODbL 4.6の再構成方法等の提供条件を確認し、同梱Foursquare NOTICE・変更日も維持する。生データ、個別距離表、図、HTMLはGitに含めない。
+
+## 記事構成の更新（2026-10-22）
+
+今回の執筆は[新宿を主例にした「3方式の使い分け」](station-range-methods-article-handoff.md)を正本とする。本資料と11bの8比較は既存検証の記録として保持し、変更しない。

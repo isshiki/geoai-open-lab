@@ -106,3 +106,7 @@ MAUPの次に[Notebook 11](../notebooks/11_walking_range.ipynb)を追加。固�
 ### Notebook 11の656駅補足検証（2026-10-22）
 
 [Notebook 11b](../notebooks/11b_walking_sensitivity.ipynb)で7条件・8比較を追加。全駅の四方対道路800mのJ中央値0.782818に対し、吉祥寺0.940357は高い側（96.57百分位）。距離上限だけを変える比較と同じ500mの直線対道路を分離。古典的MAUPの反証とはしません。[記事引き継ぎ](walking-sensitivity-article-handoff.md)。既存11の結果は変更せず、記事の補足として使用可能。記事化の分け方は未決定・未公開。
+
+### 駅周辺の記事構成の確定方針（2026-10-22）
+
+記事は「駅周辺を定義する3方式の使い分け」へ再構成する。新宿を主例、吉祥寺を対照例とし、正方形・直線500m・道路500mの3比較を全656駅へ適用した。[最新の記事資料](station-range-methods-article-handoff.md) / [追加検証](station-range-methods-validation.md)。Notebook 11・11bと既存結果は保持。新しいNotebookは増やさず、補足スクリプトと5図を用いる。記事は未公開。
