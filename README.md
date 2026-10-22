@@ -33,3 +33,5 @@ POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) /
 ## MAUP実験（2026-10-22）
 
 [Notebook 10](projects/poi/notebooks/10_maup.ipynb)：吉祥寺駅中心の固定4km四方・8,750件を5方式で分割。全体平均密度は同じでも分布・相関が変わるかを検証。Notebook 09とは独立。[記事引き継ぎ](projects/poi/docs/maup-article-handoff.md)。記事は未執筆・未公開。
+
+POIテーマの[駅周辺の範囲定義](projects/poi/docs/walking-range-article-handoff.md)（Notebook 11）を検証しました。吉祥寺の1km四方3,591件、半径500m3,481件、徒歩5分2,141件、徒歩10分3,794件。固定道路はGeofabrik関東2026-10-01版、© OpenStreetMap contributors / ODbL 1.0。元PBF SHA-256: `5e0b1bec8d8754a18db3950c6a39e4921e8c19069106a1ac038731f3d250ca83`。入力・生成物はGit管理外、記事は未公開です。

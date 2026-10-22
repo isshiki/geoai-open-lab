@@ -44,3 +44,7 @@
 ## AOIサイズ感度の記事（公開予約済み）
 
 [記事引き継ぎ](aoi-sensitivity-article-handoff.md)を基に、『POIで街を数値化して分かったこと　分析範囲で「似た街」はどう変わる？』を2026年10月20日11:50（日本時間）に公開予約済み。公開後にURLと表示を確認して追記する。
+
+## 駅周辺の範囲定義（Notebook 11）
+
+[記事資料](walking-range-article-handoff.md)と[計算方法](walking-range.md)を追加。仮タイトル『駅周辺は半径500mでよい？ PythonとOpenStreetMapで徒歩圏を比べてみた』。固定道路網で吉祥寺4条件の実測・図版を作成。記事は未執筆・未公開。既存Notebook 09/10とは独立した検証。

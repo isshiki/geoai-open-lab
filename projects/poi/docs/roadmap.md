@@ -98,3 +98,7 @@
 ## MAUP実験（2026-10-22）
 
 [Notebook 10](../notebooks/10_maup.ipynb)：吉祥寺駅中心の固定4km四方・8,750件を5方式で分割。全体平均密度は同じでも分布・相関が変わるかを検証。Notebook 09とは独立。[記事引き継ぎ](../docs/maup-article-handoff.md)。記事は未執筆・未公開。
+
+## 駅周辺の範囲定義（2026-10-22）
+
+MAUPの次に[Notebook 11](../notebooks/11_walking_range.ipynb)を追加。固定道路スナップショットで吉祥寺の正方形・円・徒歩5分/10分を検証。登録数は3,591 / 3,481 / 2,141 / 3,794件。唯一の駅勢圏を決めず、定義と接続条件に依存する結果として説明する。[検証・記事資料](walking-range-article-handoff.md)。記事は未執筆・未公開。既存AOI感度・MAUPは変更しない。

@@ -102,3 +102,9 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ## MAUP実験（2026-10-22）
 
 [Notebook 10](notebooks/10_maup.ipynb)：吉祥寺駅中心の固定4km四方・8,750件を5方式で分割。全体平均密度は同じでも分布・相関が変わるかを検証。Notebook 09とは独立。[記事引き継ぎ](docs/maup-article-handoff.md)。記事は未執筆・未公開。
+
+## 駅周辺の範囲定義（2026-10-22）
+
+[Notebook 11](notebooks/11_walking_range.ipynb)：吉祥寺の1km四方3,591件、半径500m3,481件、徒歩5分2,141件、徒歩10分3,794件。徒歩10分と正方形のJaccardは0.940357。80m/分・駅/POI接続100m上限の条件付き比較で、唯一の駅勢圏を決めるものではありません。[方法](docs/walking-range.md) / [検証・記事資料](docs/walking-range-article-handoff.md)。
+
+道路はeki-walkで作成済みのGeofabrik関東2026-10-01版を再利用し、ライブAPIを使わず再現性を確保。© OpenStreetMap contributors / [ODbL 1.0](https://www.openstreetmap.org/copyright)。元PBF SHA-256: `5e0b1bec8d8754a18db3950c6a39e4921e8c19069106a1ac038731f3d250ca83`。初回は`--road-dir`と`--osm-pbf`でローカル入力を指定し、以降はGit管理外の部分キャッシュを使います。道路の図示はノード間の概略線。既存Notebook 09/10と既存結果は変更せず、記事は未公開です。
