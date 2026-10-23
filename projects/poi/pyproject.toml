@@ -23,6 +23,11 @@ packages = ["src/geoai_open_lab"]
 clustering = [
     "scikit-learn==1.9.0",
 ]
+mesh-systems = [
+    "h3>=4.3,<5",
+    "mgrs==1.5.4",
+    "s2sphere==0.2.5",
+]
 notebooks = [
     "ipykernel>=7.3.0",
     "jupyterlab>=4.6.4",
