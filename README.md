@@ -48,3 +48,10 @@ POIテーマの[駅周辺の範囲定義](projects/poi/docs/walking-range-articl
 ## 標準地域メッシュ（Notebook 12、2026-10-23）
 
 [Notebook 12](projects/poi/notebooks/12_regional_mesh.ipynb) / [方法・出典](projects/poi/docs/regional-mesh.md) / [検証](projects/poi/docs/regional-mesh-validation.md) / [記事引き継ぎ](projects/poi/docs/regional-mesh-article-handoff.md)。既存250m人口36区画を500mの9区画へ集約し、2020年人口28,487人と固定POI登録4,057件を共通コードで結合。対象は駅中心1km四方と交差する完全メッシュ、約2.353km²。記事は未執筆・未公開。MAUP・範囲定義の次に共通統計単位を学び、EPSGの詳説へつなぐ。新規取得なし。
+
+## メッシュ入門2本特集（2026-10-23）
+
+1. **地図のメッシュ入門　標準地域メッシュ・H3・S2・独自グリッドをPythonで比較**：[Notebook 13](projects/poi/notebooks/13_mesh_systems_comparison.ipynb) / [方法](projects/poi/docs/mesh-systems.md) / [検証](projects/poi/docs/mesh-systems-validation.md) / [記事資料](projects/poi/docs/mesh-systems-article-handoff.md)。9方式のセルとOGC DGGSの位置付けを区別する。
+2. **日本の標準地域メッシュ入門　1km・500m・250mメッシュをPythonで扱う**：[記事資料](projects/poi/docs/regional-mesh-article-handoff.md)。階層・コード・境界を主題にし、人口とPOIの結合を最後の応用へ置く。
+
+両記事は未執筆・未公開。Notebook番号は実装順。Notebook 12とcommit eeeb173の実装・人口28,487人・POI登録4,057件・kichijoji-v1成果物は変更せず保持する。新図版はテーマ内data/cache/mesh_systems/comparison-v1およびregional_mesh/guide-v1へ分離。地理データの追加取得はなく、比較用Pythonライブラリだけを専用mesh-systemsグループへ追加した。

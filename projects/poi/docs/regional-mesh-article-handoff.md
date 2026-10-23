@@ -1,73 +1,97 @@
-# 地域メッシュ記事：引き継ぎ
+# 記事2：日本の標準地域メッシュ入門
 
-記事本文は未執筆・未公開。仮タイトルは **地域メッシュとは？ Pythonで500mメッシュに人口とPOIを重ねてみた** を維持する。検索語と実験内容が合っており、人口と店舗の関係を過大に強調する変更は不要。
+タイトル：**日本の標準地域メッシュ入門　1km・500m・250mメッシュをPythonで扱う**。未執筆・未公開。記事1の[方式比較](mesh-systems-article-handoff.md)から続く。Notebook番号は実装順であり記事順ではない。
 
-## 読者へ一言
+Notebook 12・commit eeeb173の実装と検証は維持する。人口28,487人、POI登録4,057件の結果は失敗例ではなく、この記事の最後の応用を支える。[既存方法・データ条件](regional-mesh.md)と[既存検証記録](regional-mesh-validation.md)は正本のまま残す。
 
-地域メッシュは、異なるデータを「同じ場所のコード」でつなぐための共通の区画です。
+## 初心者へ一言
 
-今回の発見は、500mと呼んでも厳密な500m四方ではないこと、駅中心の範囲とは境界が違うこと、コードの末尾を1桁落とすだけで250mを500mの親へまとめられること。人口とPOIの因果や相関を主題にしない。
+標準地域メッシュは、日本の公的統計を「同じ場所のコード」で結び付けるための共通の区画です。駅や生活圏に合わせた区画ではありません。
 
-## 記事の流れ
+## 記事構成と説明の要点
 
-1. 公的統計とPOIを同じ場所で見たい、という問い。
-2. 共通の区画とコード。第1次4桁・第2次6桁・第3次8桁・500m9桁・250m10桁。
-3. 吉祥寺周辺の500mメッシュ9個へ、250m人口36個とPOIを結合する。
-4. 人口28,487人とPOI登録4,057件の9行テーブル・地図を見る。
-5. 標準メッシュは駅や生活圏に合わせた境界ではないと説明する。
-6. 測地系・時点・秘匿と欠損に注意。詳しいEPSG解説は次回。
+1. **標準地域メッシュとは**：緯度・経度に基づく共通区画。JIS X 0410と公的統計での位置付けを紹介する。規格本文を転載せず統計局の解説を参照。
+2. **階層**：第1次→第2次は8×8、第2次→第3次は10×10。その後は2×2。第1次約80km/4桁、第2次約10km/6桁、第3次約1km/8桁、2分の1約500m/9桁、4分の1約250m/10桁、8分の1約125m/11桁。統計局の区分図は125mを「参考」として掲載。「4次メッシュ」という通称を使う場合も本文では2分の1地域メッシュを基本名にする。
+3. **コードの構造**：吉祥寺代表点は`53|39|4|4|4|6|1|4`。53と39で第1次、続く2桁ずつで第2次・第3次。分割の番号1=南西、2=南東、3=北西、4=北東を繰り返す。行・列は南・西を0として数える。
+4. **約500mの意味**：緯度・経度の角度幅による区画。500mメッシュの緯度幅15秒・経度幅22.5秒。東西距離は緯度で変わり、メートル単位の正方形ではない。吉祥寺代表点のセルは楕円体面積約0.261497km²（方式比較の新計測）。既存9区画の平均値とは区別する。
+5. **座標からコード**：緯度・経度と測地系を確認する。コード自体には調査年・測地系を埋め込んでいない。
+6. **コードから境界**：西・南・東・北を復元しポリゴンを作る。境界では南西を含み北東を含まない規則で一意に割り当てる。
+7. **親子変換**：250m→500mは末尾1桁を落とす。第3次→第2次は2桁。子へは規則に従う番号を追加。補助実装は125mまで扱うが既存Notebook 12の実装は変更しない。
+8. **公的統計との結合**：コードを文字列として保ち、桁・測地系・表定義・年をそろえる。区画が同じでも統計定義が変われば比較条件は変わる。
+9. **人口とPOIの応用**：最後にNotebook 12の固定結果を紹介。以下の方法と注意を使う。
+10. **最低限の注意**：秘匿・合算・欠損・境界・概数のサイズ・時点を確認。商圏・生活圏の正解ではない。MAUPの検証は再演しない。EPSGの詳細は別記事へ。
 
-## 掲載コード
+## 本文の最小コード
 
-`projects/poi/`で既存uv環境・固定入力を準備して実行する。ダウンロード処理は含まない。
+`projects/poi/`のuv環境で実行。既存実装の説明を主にする。
 
 ```python
-from geoai_open_lab.regional_mesh import encode_mesh, mesh_bounds, run
+from geoai_open_lab.regional_mesh import encode_mesh, mesh_bounds, mesh_polygon
+from pyproj import Transformer
 
-code = encode_mesh(35.70314448120142, 139.57980985190306, digits=9)
-print(code)                 # 533944461
-print(mesh_bounds(code))    # 西・南・東・北（JGD2011緯度経度）
-meshes, manifest = run()
-meshes[["mesh_code", "population_2020", "poi_count"]]
+lon, lat = Transformer.from_crs(4326, 6668, always_xy=True).transform(
+    139.57980985190306, 35.70314448120142
+)
+code_500 = encode_mesh(lat, lon, digits=9)   # 533944461
+code_250 = encode_mesh(lat, lon, digits=10)  # 5339444614
+print(mesh_bounds(code_500))                # 西・南・東・北
+polygon = mesh_polygon(code_500)
+assert code_250[:-1] == code_500
 ```
 
-計算の要点は「250mコードの最後を落として合計」「POI位置を9桁へ変換」「コードで結合」。ライブラリ側では子区画4個の存在、取得済み範囲、ハッシュ、ID重複、面積と保存則を検査している。単に`groupby().sum()`だけで欠損を0として扱わない。図の表示コードはNotebookを参照。
+一般の階層を操作する追加補助関数：
 
-## 実測・出典
+```python
+from geoai_open_lab.standard_mesh_guide import encode, parent, children, bounds
+code_125 = encode(lat, lon, digits=11)
+assert parent(code_125) == code_250
+print(children(code_500))  # 500mの中の250mコード4個
+```
 
-[検証記録](regional-mesh-validation.md)の9行が記事の正本。元データと計算条件・公式リンク・利用条件は[方法](regional-mesh.md)。人口は2020-10-01のT001142・JGD2011版250m。POIはOverture 2026-09-23.0、取得2026-10-15。対象区画の人口列は全て揃い、秘匿フラグ0。
+この例は既存の駅代表点の緯度経度を明示的にJGD2011へ変換してから用いる。外部POIも必要な変換をしてから渡す。EPSG:6668はJGD2011の緯度経度、6677は第IX系の平面直角座標。面積を度数のまま計算しない。コードは座標の基準を自動判別しない。
 
-対象は既存の駅中心1km四方に重なる500mメッシュの全体、合計約2.353km²。従来の1km四方3,591件と範囲が違う。今回の4,057件を旧1km四方の値として差し替えない。1区画約0.2614km²であり、約500mは厳密な正方形ではない。
+## 最後の応用：人口とPOI
 
-## 図版
+一般的には、POI座標に同じメッシュコードを付け、メッシュ別の登録数・カテゴリ構成を集計し、人口表とコードで結合する。人口当たりPOI数を計算するなら、人口0・欠損の除算結果は未定義として扱う。
 
-以下は全てリポジトリ内 `projects/poi/data/cache/regional_mesh/kichijoji-v1/` 以下。各SVGと同名PNGがある。生成物をGitへ追加せず、ブログ担当へローカルファイルとして渡す。
+```python
+# meshesはNotebook 12で検証した結合結果。新規取得はしない。
+pop = meshes["population_2020"].where(meshes["population_2020"] > 0)
+poi_per_1000 = meshes["poi_count"].div(pop).mul(1000)
+```
 
-| ファイル | キャプション案 |
-| --- | --- |
-| hierarchy.svg / hierarchy.png | 同じ第3次メッシュを4分割すると500m、16分割すると250m。大きさはおおよそ。 |
-| code.svg / code.png | 吉祥寺駅代表点のコードを分解。末尾1桁を落とすと250mから500mへ。 |
-| population.svg / population.png | 250m人口36区画を500mの9区画へ合計。2020年の常住人口。 |
-| population_poi.svg / population_poi.png | 同じ9桁コードへ人口とPOI登録数を結合。両者は時点と意味が異なる。 |
-| purpose.svg / purpose.png | 統計を結合する共通区画と、目的に応じた駅中心範囲を区別する。 |
-| cover_1600x900.svg / cover_1600x900.png | 地域メッシュをPythonで扱い、人口とPOIを共通コードでつなぐ。 |
+この人口当たり指標は方法紹介であり、今回の新しい検証結果や需要指標ではない。カテゴリ構成も一般的な拡張例で、Notebook 12に存在しない集計を実測済みと書かない。
 
-`12_regional_mesh.html`、`12_regional_mesh.executed.ipynb`、`mesh500.csv`、`manifest.json`も同じフォルダ。記事用図には出典と加工日を残し、Foursquare-NOTICE.txt・Apache-LICENSE.txtの条件を維持する。署名は出典の代わりではない。
+既存の応用結果：250m人口36区画→500mの9区画、2020年常住人口28,487人、Overture登録4,057件。対象は駅中心1km四方と交差する**完全な500mメッシュ9区画（約2.353km²）**であり、1km四方そのものではない。旧1km四方3,591件を差し替えない。
 
-## 言えること・言えないこと
+人口は2020-10-01の国勢調査T001142・JGD2011版、POIはOverture 2026-09-23.0、取得2026-10-15。対象の人口列は揃い、秘匿フラグ0。常住人口・昼間人口・POI登録数は異なる概念。人口は最新値でも昼間人口でもなく、POIは実店舗数・営業中店舗数ではない。売上・需要・商圏の強さ・出店可否は判断しない。
 
-全国共通コードによる結合や、定義・測地系を合わせた時点間比較に向く。一方、駅・商圏・生活圏の中心や境界に一致するわけではなく、分析目的に最適な大きさとも限らない。境界をまたぐ施設やMAUPの影響は残る。今回はMAUPを改めて測定しない。
+秘匿・合算の扱いは統計表ごとの定義を確認する。公式500m表との直接照合はしておらず、250m公表値の集約である。測地系の変換精度と元座標の誤差も残る。[既存検証](regional-mesh-validation.md)を参照。
 
-人口は最新値・昼間人口ではない。POI登録数は実店舗数・営業中店舗数ではない。2種類の数値から売上、需要、街の優劣や出店可否を判断しない。欠けた人口セルは0としない。人口総数が秘匿対象外であることはT001142の当該列の話であり、全項目に一般化しない。
+## 新しい入門図版
 
-公式500m配布表と公式GIS境界の直接照合はしていない。対象は250m公表値の合計。コード規則の検証と独立した人口表の一致を混同しない。EPSG:4326→6668の座標操作の公称精度1mや元POIの誤差も残る。
+基底：`C:/Projects-GitHub/geoai-open-lab/projects/poi/data/cache/regional_mesh/guide-v1/`。SVGと同名PNG。
 
-前のMAUP記事は「区切り方への感度」、駅周辺記事は「用途別の範囲」、今回は「共通コードで統計を結合」。次のEPSG記事は「座標の基準と単位」。同じ説明を再演しない。
+|ファイル|キャプション|
+|---|---|
+|hierarchy.svg / .png|約80kmから約125mまでの階層。サイズは目安、模様は模式図。|
+|code.svg / .png|場所のコードを段階ごとに読む。四分割番号は1〜4。|
+|conversion.svg / .png|緯度経度→コード→境界。親子も規則で行き来できる。|
+|join.svg / .png|人口とPOIに共通コードを持たせて結合する。時点と意味は異なる。|
+|cover_1600x900.svg / .png|1km・500m・250mの区画をPythonで扱う。|
 
-## 公開コードと再現方法
+再生成：`uv run --no-sync python -m geoai_open_lab.mesh_guide_figures`、PNGは`node scripts/render_mesh_guides.cjs`。旧出力へは書き込まない。
 
-- [Notebook 12](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/notebooks/12_regional_mesh.ipynb)
-- [実装](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/src/geoai_open_lab/regional_mesh.py)
-- [方法・出典](regional-mesh.md)の再実行コマンドを利用する。
+## 保存した検証図版
 
-ブログ原稿や外部サービスへの公開は今回実施していない。
+`C:/Projects-GitHub/geoai-open-lab/projects/poi/data/cache/regional_mesh/kichijoji-v1/`のpopulation.svg/png、population_poi.svg/png、旧カバー、実行HTML、mesh500.csv、manifest.jsonは全て保持。必要なら応用節へ旧人口地図を掲載できる。旧HTMLは元の応用中心の構成であり、新記事本文とは構成が異なる。
+
+既存のFoursquare-NOTICE.txt・Apache-LICENSE.txtと出典を維持。図版の署名は出典の代わりではない。生成物はGitへ追加しない。
+
+## 役割分担・公式資料
+
+記事1は方式選択、この記事は標準コードと階層、Notebook 12は人口・POI結合の応用検証。前のMAUPは区切りへの感度、駅周辺記事は用途別の範囲。次のEPSG記事は座標の基準と単位。
+
+2026-10-23確認：[統計局の概要](https://www.stat.go.jp/data/mesh/m_tuite.html) / [区分図pp.1–6](https://www.stat.go.jp/data/mesh/pdf/m-kukaku.pdf) / [用語](https://www.stat.go.jp/data/mesh/yougo.html)。人口の定義・秘匿と再配布条件は[既存方法](regional-mesh.md)のe-Stat一次資料を使用する。
+
+公開コード：[Notebook 12](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/notebooks/12_regional_mesh.ipynb) / [既存実装](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/src/geoai_open_lab/regional_mesh.py) / [追加階層補助](https://github.com/isshiki/geoai-open-lab/blob/main/projects/poi/src/geoai_open_lab/standard_mesh_guide.py)。
