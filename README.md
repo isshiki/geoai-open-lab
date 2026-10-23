@@ -43,3 +43,8 @@ POIテーマの[駅周辺の範囲定義](projects/poi/docs/walking-range-articl
 ## 記事構成の更新：駅周辺を定義する3方式
 
 新宿を主例、吉祥寺を対照とする[記事引き継ぎ](projects/poi/docs/station-range-methods-article-handoff.md)を追加しました。正方形・直線500m・道路500mを同じ形式で656駅に適用し、使い分けを説明します。[検証](projects/poi/docs/station-range-methods-validation.md)。Notebook 11・11bと保存済み結果は保持、記事は未公開です。
+
+
+## 標準地域メッシュ（Notebook 12、2026-10-23）
+
+[Notebook 12](projects/poi/notebooks/12_regional_mesh.ipynb) / [方法・出典](projects/poi/docs/regional-mesh.md) / [検証](projects/poi/docs/regional-mesh-validation.md) / [記事引き継ぎ](projects/poi/docs/regional-mesh-article-handoff.md)。既存250m人口36区画を500mの9区画へ集約し、2020年人口28,487人と固定POI登録4,057件を共通コードで結合。対象は駅中心1km四方と交差する完全メッシュ、約2.353km²。記事は未執筆・未公開。MAUP・範囲定義の次に共通統計単位を学び、EPSGの詳説へつなぐ。新規取得なし。

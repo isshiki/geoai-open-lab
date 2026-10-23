@@ -116,3 +116,8 @@ data/cache/           ローカルキャッシュ（Git管理外）
 ### 記事構成：駅周辺を定義する3方式の使い分け
 
 [新しい記事資料](docs/station-range-methods-article-handoff.md)は新宿を主例、吉祥寺を対照に使用。全656駅のJ中央値は正方形対円0.855233、正方形対道路500m 0.566022、円対道路500m 0.666667。[追加検証](docs/station-range-methods-validation.md)。既存Notebook 11・11bと結果は変更せず、追加スクリプトで集計しました。
+
+
+## 標準地域メッシュ（Notebook 12、2026-10-23）
+
+[Notebook 12](notebooks/12_regional_mesh.ipynb) / [方法・出典](docs/regional-mesh.md) / [検証](docs/regional-mesh-validation.md) / [記事引き継ぎ](docs/regional-mesh-article-handoff.md)。既存250m人口36区画を500mの9区画へ集約し、2020年人口28,487人と固定POI登録4,057件を共通コードで結合。対象は駅中心1km四方と交差する完全メッシュ、約2.353km²。記事は未執筆・未公開。MAUP・範囲定義の次に共通統計単位を学び、EPSGの詳説へつなぐ。新規取得なし。

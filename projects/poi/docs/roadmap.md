@@ -110,3 +110,8 @@ MAUPの次に[Notebook 11](../notebooks/11_walking_range.ipynb)を追加。固�
 ### 駅周辺の記事構成の確定方針（2026-10-22）
 
 記事は「駅周辺を定義する3方式の使い分け」へ再構成する。新宿を主例、吉祥寺を対照例とし、正方形・直線500m・道路500mの3比較を全656駅へ適用した。[最新の記事資料](station-range-methods-article-handoff.md) / [追加検証](station-range-methods-validation.md)。Notebook 11・11bと既存結果は保持。新しいNotebookは増やさず、補足スクリプトと5図を用いる。記事は未公開。
+
+
+## 標準地域メッシュ（Notebook 12、2026-10-23）
+
+[Notebook 12](../notebooks/12_regional_mesh.ipynb) / [方法・出典](../docs/regional-mesh.md) / [検証](../docs/regional-mesh-validation.md) / [記事引き継ぎ](../docs/regional-mesh-article-handoff.md)。既存250m人口36区画を500mの9区画へ集約し、2020年人口28,487人と固定POI登録4,057件を共通コードで結合。対象は駅中心1km四方と交差する完全メッシュ、約2.353km²。記事は未執筆・未公開。MAUP・範囲定義の次に共通統計単位を学び、EPSGの詳説へつなぐ。新規取得なし。

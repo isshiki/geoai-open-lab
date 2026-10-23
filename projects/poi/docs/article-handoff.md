@@ -56,3 +56,8 @@
 ## 最新の記事構成：駅周辺を定義する3方式の使い分け
 
 [こちらの記事引き継ぎ](station-range-methods-article-handoff.md)を今回の執筆用正本とする。新宿の3方式の地図、吉祥寺との対照、全656駅の統計、目的別インフォグラフィックを用いる。Notebook 11・11bの元資料は検証履歴として保持し、以前の「吉祥寺の高一致」を今回の主例にしない。
+
+
+## 標準地域メッシュ（Notebook 12、2026-10-23）
+
+[Notebook 12](../notebooks/12_regional_mesh.ipynb) / [方法・出典](../docs/regional-mesh.md) / [検証](../docs/regional-mesh-validation.md) / [記事引き継ぎ](../docs/regional-mesh-article-handoff.md)。既存250m人口36区画を500mの9区画へ集約し、2020年人口28,487人と固定POI登録4,057件を共通コードで結合。対象は駅中心1km四方と交差する完全メッシュ、約2.353km²。記事は未執筆・未公開。MAUP・範囲定義の次に共通統計単位を学び、EPSGの詳説へつなぐ。新規取得なし。
