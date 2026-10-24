@@ -1,5 +1,7 @@
 # POI：取得・比較から地域特徴量へ
 
+座標系入門を[Notebook 14](notebooks/14_crs.ipynb)として追加しました。[方法](docs/crs.md) / [検証](docs/crs-validation.md) / [記事引き継ぎ](docs/crs-article-handoff.md)。吉祥寺の500m抽出は測地線・6677とも3,481件、3857の単純バッファーは3,111件。世界の面積と合成密度も検証し、既存分析は変更していません。記事は未執筆・未公開です。
+
 **This repository uses only publicly obtainable data. No proprietary company data is included.**
 
 個人ブログと連動する、都市GeoAI / Location Intelligenceの公開実験リポジトリです。公開データを取得・再現できるコードと手順を育てます。最初の実験は、接続・地域のPOI取得・カフェ抽出を短いコードで追える初心者向けの [Foursquare Open Source PlacesのNotebook](notebooks/01_foursquare_places.ipynb) です。[実行手順](docs/foursquare.md)と[実際の検証状況](docs/foursquare-validation.md)を確認してください。

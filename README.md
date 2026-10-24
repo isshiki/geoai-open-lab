@@ -1,5 +1,7 @@
 # geoai-open-lab
 
+POI連載の座標系入門：[Notebook 14](projects/poi/notebooks/14_crs.ipynb) / [検証](projects/poi/docs/crs-validation.md) / [記事引き継ぎ](projects/poi/docs/crs-article-handoff.md)。緯度経度・Webメルカトル・東京の平面直角座標・イコールアースを、距離・面積・POI密度で比較します。既存結果は維持し、記事は未執筆・未公開です。
+
 **This repository uses only publicly obtainable data. No proprietary company data is included.**
 
 個人ブログと連動する公開GeoAI / Location Intelligenceラボです。目的別のプロジェクトに、コード・Notebook・文書・テストをまとめています。
