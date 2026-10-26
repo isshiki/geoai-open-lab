@@ -1,5 +1,7 @@
 # geoai-open-lab
 
+POI影響範囲の部分追試：[Notebook 15](projects/poi/notebooks/15_urban_function.ipynb) / [方法と論文との差分](projects/poi/docs/urban-function.md) / [実測検証](projects/poi/docs/urban-function-validation.md)。固定・適応半径を比較し、住宅POI不足と外部土地利用との低い一致を報告。都市機能の正しい境界や精度改善とは扱いません。
+
 POI連載の座標系入門：[Notebook 14](projects/poi/notebooks/14_crs.ipynb) / [検証](projects/poi/docs/crs-validation.md) / [記事引き継ぎ](projects/poi/docs/crs-article-handoff.md)。緯度経度・Webメルカトル・東京の平面直角座標・イコールアースを、距離・面積・POI密度で比較します。既存結果は維持し、記事は未執筆・未公開です。
 
 **This repository uses only publicly obtainable data. No proprietary company data is included.**

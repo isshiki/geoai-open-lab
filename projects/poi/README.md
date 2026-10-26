@@ -1,5 +1,7 @@
 # POI：取得・比較から地域特徴量へ
 
+[Notebook 15：POIの影響範囲](notebooks/15_urban_function.ipynb)を追加。[方法](docs/urban-function.md) / [検証](docs/urban-function-validation.md) / [記事引き継ぎ](docs/urban-function-article-handoff.md)。吉祥寺4km四方で固定区画・共通ガウス・適応ガウスを比較する論文の部分追試です。住宅は1件で推定不能。適応半径の安定性と外部土地利用との対応は別で、精度改善は確認していません。記事は未執筆・未公開です。
+
 座標系入門を[Notebook 14](notebooks/14_crs.ipynb)として追加しました。[方法](docs/crs.md) / [検証](docs/crs-validation.md) / [記事引き継ぎ](docs/crs-article-handoff.md)。吉祥寺の500m抽出は測地線・6677とも3,481件、3857の単純バッファーは3,111件。世界の面積と合成密度も検証し、既存分析は変更していません。記事は未執筆・未公開です。
 
 **This repository uses only publicly obtainable data. No proprietary company data is included.**
