@@ -1,9 +1,5 @@
 # POI記事と実装のロードマップ
 
-## POI影響範囲の部分追試（Notebook 15、2026-10-26）
-
-**POIの影響範囲をPythonで推定する　固定半径・適応半径を比較**。[Notebook](../notebooks/15_urban_function.ipynb) / [方法](urban-function.md) / [検証](urban-function-validation.md) / [記事引き継ぎ](urban-function-article-handoff.md)。吉祥寺4km四方、住宅入力不足、半径と正規化の影響、独立の公園・緑地との限定比較を扱う。完全再現・都市機能境界の正解とは称さない。住宅を含む3機能の一般向け地図は今回見送る。記事未執筆・未公開。既存Notebookと成果は維持。
-
 ## 座標系入門（Notebook 14、2026-10-24）
 
 メッシュ入門2本の次に **地図の座標系入門　緯度経度・投影法・EPSGをPythonで理解する** を配置。[Notebook](../notebooks/14_crs.ipynb) / [方法](crs.md) / [検証](crs-validation.md) / [記事資料](crs-article-handoff.md)。既存POIで吉祥寺500m抽出・世界境界で面積・合成例で密度の歪みを確認。既存656駅の6677分析は維持。記事は未執筆・未公開。測地学史・鉛直座標・ジオイド・時間依存座標は後続候補。
