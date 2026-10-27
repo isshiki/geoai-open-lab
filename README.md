@@ -57,3 +57,7 @@ POIテーマの[駅周辺の範囲定義](projects/poi/docs/walking-range-articl
 2. **日本の標準地域メッシュ入門　1km・500m・250mメッシュをPythonで扱う**：[記事資料](projects/poi/docs/regional-mesh-article-handoff.md)。階層・コード・境界を主題にし、人口とPOIの結合を最後の応用へ置く。
 
 両記事は未執筆・未公開。Notebook番号は実装順。Notebook 12とcommit eeeb173の実装・人口28,487人・POI登録4,057件・kichijoji-v1成果物は変更せず保持する。新図版はテーマ内data/cache/mesh_systems/comparison-v1およびregional_mesh/guide-v1へ分離。地理データの追加取得はなく、比較用Pythonライブラリだけを専用mesh-systemsグループへ追加した。
+
+## 依存関係のセキュリティ更新（2026-10-27）
+
+`projects/poi/uv.lock` と `projects/station-territory/uv.lock` の certifi を 2026.10.19、駅の縄張り環境の Pillow を 13.0.0 に対象更新しました。他のパッケージ版と対応Python範囲は維持しています。POIの地域特徴量・CRSの28テスト、駅の縄張りの14テスト、既存venvの依存整合性確認が成功しました。Notebook全体・実データ再取得・全描画の再現比較と公開反映は未実施です。
