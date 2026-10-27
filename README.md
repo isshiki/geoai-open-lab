@@ -61,3 +61,7 @@ POIテーマの[駅周辺の範囲定義](projects/poi/docs/walking-range-articl
 ## 依存関係のセキュリティ更新（2026-10-27）
 
 `projects/poi/uv.lock` と `projects/station-territory/uv.lock` の certifi を 2026.10.19、駅の縄張り環境の Pillow を 13.0.0 に対象更新しました。他のパッケージ版と対応Python範囲は維持しています。POIの地域特徴量・CRSの28テスト、駅の縄張りの14テスト、既存venvの依存整合性確認が成功しました。Notebook全体・実データ再取得・全描画の再現比較と公開反映は未実施です。
+
+## 残るDependabot警告への対応（2026-10-27）
+
+POI・駅勢圏のnotebooksグループでnbconvertの最低版を7.17.2へ引き上げ、両方のlockと既存venvを更新しました。未信頼Notebookの変換時に生じ得るパス処理の脆弱性への対応です。POIの28テスト、駅勢圏の14テスト、各環境のメモリ内Markdown変換テストが成功し、依存・lock整合も確認しました。変換ではセルを実行せず、Notebook原本や実データは変更していません。全Notebook・全出力形式の検証は未実施です。
