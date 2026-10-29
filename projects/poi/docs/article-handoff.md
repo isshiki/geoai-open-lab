@@ -1,5 +1,9 @@
 # POI記事の引き継ぎ
 
+## GeoJSON後編（Notebook 15）
+
+**GeoJSONをPythonで扱う　読み込み・作成・検証・地図表示**。[専用引き継ぎ](geojson-python-article-handoff.md)に掲載コード・実測・図版・前編からの導線を整理。架空のPoint/LineString/Polygon、外部取得なし。未閉鎖リングの読込経路差を含め、ライブラリの保証範囲を説明。記事未執筆・未公開。
+
 ## 座標系入門（Notebook 14）
 
 **地図の座標系入門　緯度経度・投影法・EPSGをPythonで理解する** の[記事資料](crs-article-handoff.md) / [検証](crs-validation.md) / [Notebook](../notebooks/14_crs.ipynb)。測地線・6677の500m抽出3,481件、3857は3,111件。世界の面積比較と合成密度例、用途別の選び方を掲載。国連決議A/RES/80/307をメルカトル禁止や万能図法の指定と表現しない。既存結果は変更せず、記事は未執筆・未公開。

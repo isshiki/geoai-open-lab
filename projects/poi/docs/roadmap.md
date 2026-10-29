@@ -1,5 +1,9 @@
 # POI記事と実装のロードマップ
 
+## GeoJSON後編（Notebook 15、2026-10-29）
+
+**GeoJSONをPythonで扱う　読み込み・作成・検証・地図表示**。[Notebook](../notebooks/15_geojson.ipynb) / [記事資料](geojson-python-article-handoff.md) / [検証](geojson-python-validation.md)。前編の用語を架空3地物で実行し、構文・構造・幾何・内容を区別。既存結果は維持。記事未執筆・未公開。
+
 ## 座標系入門（Notebook 14、2026-10-24）
 
 メッシュ入門2本の次に **地図の座標系入門　緯度経度・投影法・EPSGをPythonで理解する** を配置。[Notebook](../notebooks/14_crs.ipynb) / [方法](crs.md) / [検証](crs-validation.md) / [記事資料](crs-article-handoff.md)。既存POIで吉祥寺500m抽出・世界境界で面積・合成例で密度の歪みを確認。既存656駅の6677分析は維持。記事は未執筆・未公開。測地学史・鉛直座標・ジオイド・時間依存座標は後続候補。

@@ -1,5 +1,7 @@
 # POI：取得・比較から地域特徴量へ
 
+GeoJSON後編：[Notebook 15](notebooks/15_geojson.ipynb) / [検証](docs/geojson-python-validation.md) / [記事引き継ぎ](docs/geojson-python-article-handoff.md)。外部取得なしの架空3地物で、読込成功・幾何的妥当性・内容の正しさを区別します。記事は未執筆・未公開。
+
 座標系入門を[Notebook 14](notebooks/14_crs.ipynb)として追加しました。[方法](docs/crs.md) / [検証](docs/crs-validation.md) / [記事引き継ぎ](docs/crs-article-handoff.md)。吉祥寺の500m抽出は測地線・6677とも3,481件、3857の単純バッファーは3,111件。世界の面積と合成密度も検証し、既存分析は変更していません。記事は未執筆・未公開です。
 
 **This repository uses only publicly obtainable data. No proprietary company data is included.**
