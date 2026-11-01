@@ -1,5 +1,7 @@
 # geoai-open-lab
 
+新規分析の入口：[データ適用判断・分析計画・実行履歴](docs/analysis-workflow.md)。既存のmanifestや検証を再利用し、入力不足なら着手を止め、失敗・中止・条件変更も残します。[事後点検例](projects/poi/docs/geojson-analysis-review.md)。
+
 GeoJSON後編：[Notebook 15](projects/poi/notebooks/15_geojson.ipynb) / [記事引き継ぎ](projects/poi/docs/geojson-python-article-handoff.md)。架空の点・線・面で読み込み・作成・保存・検証・地図表示を実測。記事は未執筆・未公開。
 
 POI連載の座標系入門：[Notebook 14](projects/poi/notebooks/14_crs.ipynb) / [検証](projects/poi/docs/crs-validation.md) / [記事引き継ぎ](projects/poi/docs/crs-article-handoff.md)。緯度経度・Webメルカトル・東京の平面直角座標・イコールアースを、距離・面積・POI密度で比較します。既存結果は維持し、記事は未執筆・未公開です。

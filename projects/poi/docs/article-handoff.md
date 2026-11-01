@@ -1,5 +1,7 @@
 # POI記事の引き継ぎ
 
+今後の分析では[共通手順](../../../docs/analysis-workflow.md)と[引き継ぎ追加項目](../../../docs/templates/analysis-handoff.md)で、事前条件・探索・不採用結果を整理します。[GeoJSONの事後点検例](geojson-analysis-review.md)は既存本文・結果を変更しない別資料です。
+
 ## GeoJSON後編（Notebook 15）
 
 **GeoJSONをPythonで扱う　読み込み・作成・検証・地図表示**。[専用引き継ぎ](geojson-python-article-handoff.md)に掲載コード・実測・図版・前編からの導線を整理。架空のPoint/LineString/Polygon、外部取得なし。未閉鎖リングの読込経路差を含め、ライブラリの保証範囲を説明。記事未執筆・未公開。
