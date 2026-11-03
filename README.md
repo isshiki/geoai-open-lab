@@ -20,6 +20,8 @@ POI連載の座標系入門：[Notebook 14](projects/poi/notebooks/14_crs.ipynb)
 
 POIの入口：[Foursquare](projects/poi/notebooks/01_foursquare_places.ipynb) / [Overture](projects/poi/notebooks/02_overture_places.ipynb) / [OpenStreetMap](projects/poi/notebooks/03_openstreetmap_poi.ipynb) / [3データ比較](projects/poi/notebooks/04_poi_comparison.ipynb)。[地域特徴量](projects/poi/notebooks/05_region_features.ipynb) / [記事資料](projects/poi/docs/region-features-article-handoff.md)。[類似地域検索](projects/poi/notebooks/06_similar_regions.ipynb) / [検証](projects/poi/docs/similar-regions-validation.md)。旧Notebook・docパスには移動案内を残しています。
 
+地域類似性の公開事例を、元サービスの追試ではなく、自分の公開データ環境で実行できることの着想として評価する[調査記録](projects/poi/docs/place-similarity-source-review.md)を追加しました。GEXTの都市構造類似性、Esriの説明可能な類似地域検索、農業遺産景観の空間制約付き地域区分について、既存656駅・256格子・公開POIで実施できる範囲、MAUP・UGCoP・生態学的誤謬の注意、実装前の停止条件を整理しています。来週以降の実施順は[目的別の実験計画](projects/poi/docs/place-similarity-experiment-plan.md)にまとめています。
+
 [構成・記事連携](docs/project-organization.md) / [POI記事ロードマップ](projects/poi/docs/roadmap.md) / [データポリシー](docs/data-policy.md) / [エージェント規則](AGENTS.md)
 
 会社の非公開資産を本リポジトリへ持ち込みません。公開された本リポジトリを会社側から参照することは、ライセンスに従って可能です。生データ・秘密情報・生成物はGit管理外の `data/` に保存します。

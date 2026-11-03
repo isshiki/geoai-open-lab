@@ -1,5 +1,9 @@
 # POI記事と実装のロードマップ
 
+## 地域類似性・空間地域区分の次期実験（2026-11-03）
+
+[公開事例の調査記録](place-similarity-source-review.md)を基に、来週以降の候補を[目的別の実験計画](place-similarity-experiment-plan.md)へ整理した。最初に既存656駅で説明可能な類似駅検索と大井町の副分析を行い、完了後に吉祥寺4km四方・256格子で空間制約なし／ありの地域区分を比較する。候補Notebookは16・17だが、各実験の個別計画を固定するまでは番号と実装を確定扱いしない。
+
 ## GeoJSON後編（Notebook 15、2026-10-29）
 
 **GeoJSONをPythonで扱う　読み込み・作成・検証・地図表示**。[Notebook](../notebooks/15_geojson.ipynb) / [記事資料](geojson-python-article-handoff.md) / [検証](geojson-python-validation.md)。前編の用語を架空3地物で実行し、構文・構造・幾何・内容を区別。既存結果は維持。記事未執筆・未公開。
