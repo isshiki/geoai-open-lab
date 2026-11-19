@@ -7,7 +7,7 @@ name = "geoai-open-lab"
 version = "0.1.0"
 description = "Open and reproducible urban GeoAI and Location Intelligence experiments."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11.5"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 dependencies = [
@@ -29,6 +29,8 @@ mesh-systems = [
     "s2sphere==0.2.5",
 ]
 notebooks = [
+    "soupsieve>=4.0",
+    "tornado>=6.6.1",
     "ipykernel>=7.3.0",
     "jupyterlab>=4.6.4",
     "nbclient>=0.11.0",

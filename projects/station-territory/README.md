@@ -1,5 +1,7 @@
 # 駅の縄張りランキング
 
+2026-11-19：[Notebook依存のセキュリティ更新と検証](../../docs/dependency-security-20261119.md)。Soup Sieve 4.0・Tornado 6.6.1へ更新。Python 3.11.5以上を使用します。
+
 東京23区の駅を、歩行道路網による縄張りの面積・推計人口・OSM登録POI数・人口加重平均道のりで集計します。POI記事シリーズとは独立したテーマです。
 
 [Notebook](notebooks/01_rankings.ipynb) / [定義と限界](docs/method.md) / [入力と公開条件](docs/data-sources.md) / [検証](docs/validation.md) / [記事引き継ぎ](docs/article-handoff.md)
